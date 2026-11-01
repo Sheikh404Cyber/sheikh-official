@@ -84,7 +84,7 @@ img { max-width: 100%; }
   transition: color 0.2s, background 0.2s;
 }
 .main-nav a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
-.header-actions { display: flex; align-items: center; gap: 12px; margin-left: 6px; }
+.header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 .user-chip { font-size: 14px; font-weight: 600; color: var(--text); padding: 0 4px; white-space: nowrap; }
 
 .btn {
