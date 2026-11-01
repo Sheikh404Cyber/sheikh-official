@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — AMIN SHEIKH</title>
+<meta name="description" content="Log in to your Sheikh-OFFICIAL account to download free tools.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AMIN SHEIKH — Digital Creator & Tool Builder">
+<meta property="og:image" content="/media/profile.jpg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="/"><span class="mark">S</span><span>SHEIKH<small>.</small></span></a>
+    <nav class="main-nav">
+      <a href="/#tools">Tools</a>
+      <a href="/#tutorials">Tutorials</a>
+      <a href="/#websites">Websites</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn primary small" href="/signup">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-shell">
+  <form class="auth-card" id="loginForm" novalidate>
+    <h1>Welcome back 👋</h1>
+    <p class="sub">Log in to download tools and pick up where you left off.</p>
+    <div class="form-error" id="formError"></div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Your password">
+    </div>
+    <button class="btn primary" type="submit" id="submitBtn">Login</button>
+    <p class="auth-alt">New here? <a href="/signup">Create a free account</a></p>
+  </form>
+</main>
+
+<div class="toast-zone" id="toastZone"></div>
+<script src="/assets/js/auth.js"></script>
+</body>
+</html>

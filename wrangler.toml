@@ -1,0 +1,13 @@
+name = "sheikh-official"
+compatibility_date = "2026-10-01"
+pages_build_output_dir = "public"
+
+# Bindings. The binding NAME must stay exactly: DB.
+# At deploy time the parent creates the D1 database, replaces the
+# database_id placeholder below with the real id, applies schema.sql
+# (or migrations/0001_init.sql) and runs the generated seed.sql.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sheikh-official-db"
+database_id = "245d4bd3-f2a0-420b-8ae4-8478ed275503"

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — AMIN SHEIKH</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="/"><span class="mark">S</span><span>SHEIKH<small>.</small></span></a>
+    <div class="header-actions" style="margin-left:auto">
+      <a class="btn ghost small hide-sm" href="/" target="_blank" rel="noopener">View Site ↗</a>
+      <button class="btn small" id="logoutBtn" type="button">Logout</button>
+    </div>
+  </div>
+</header>
+
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="who">
+      <div class="nm" id="adminName">Admin</div>
+      <div class="em" id="adminEmail"></div>
+    </div>
+    <button class="tab-btn active" data-tab="dashboard" type="button">📊 Dashboard</button>
+    <button class="tab-btn" data-tab="users" type="button">👥 Users</button>
+    <button class="tab-btn" data-tab="tools" type="button">🛠️ Tools</button>
+    <button class="tab-btn" data-tab="videos" type="button">🎬 Videos</button>
+    <button class="tab-btn" data-tab="demos" type="button">🌐 Websites</button>
+    <button class="tab-btn" data-tab="settings" type="button">⚙️ Settings</button>
+  </aside>
+
+  <main class="admin-main">
+    <!-- Dashboard -->
+    <section class="tab-page active" id="tab-dashboard">
+      <h1>Dashboard</h1>
+      <p class="page-sub">Overview of your platform.</p>
+      <div class="stat-cards" id="statCards"></div>
+      <div class="panel-box">
+        <h2>🆕 Recent signups</h2>
+        <div id="recentSignups"><p class="empty-line">Loading…</p></div>
+      </div>
+      <div class="panel-box">
+        <h2>⬇ Recent downloads</h2>
+        <div id="recentDownloads"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Users -->
+    <section class="tab-page" id="tab-users">
+      <h1>Users</h1>
+      <p class="page-sub">Everyone who signed up appears here. Turn on <b>Download</b> to unlock tool downloads for a user. <b>Blocked</b> users cannot log in.</p>
+      <div class="panel-box">
+        <div id="usersTable"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="tab-page" id="tab-tools">
+      <h1>Tools</h1>
+      <p class="page-sub">Add and manage the downloadable tools shown on the site.</p>
+      <div class="panel-box">
+        <h2 id="toolFormTitle">➕ Add a tool</h2>
+        <form id="toolForm">
+          <input type="hidden" id="toolId">
+          <div class="form-grid">
+            <div class="field"><label for="toolName">Name *</label><input id="toolName" required placeholder="SHEIKH QuickVid"></div>
+            <div class="field"><label for="toolTagline">Tagline</label><input id="toolTagline" placeholder="One-line pitch"></div>
+            <div class="field full"><label for="toolDesc">Description</label><textarea id="toolDesc" rows="3" placeholder="What does it do?"></textarea></div>
+            <div class="field"><label for="toolVersion">Version</label><input id="toolVersion" placeholder="2.0"></div>
+            <div class="field"><label for="toolSize">Size label</label><input id="toolSize" placeholder="95 MB"></div>
+            <div class="field"><label for="toolKind">Download type</label>
+              <select id="toolKind"><option value="file">File on this site</option><option value="link">External link (GitHub release…)</option></select></div>
+            <div class="field"><label for="toolSort">Sort order</label><input id="toolSort" type="number" value="0"></div>
+            <div class="field full" id="toolFileWrap"><label for="toolFile">File path (on this site)</label><input id="toolFile" placeholder="/downloads/my-tool.zip"></div>
+            <div class="field full hidden" id="toolUrlWrap"><label for="toolUrl">External URL</label><input id="toolUrl" placeholder="https://github.com/…"></div>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="toolPublished" checked> Published (visible on the site)</label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit" id="toolSaveBtn">Save Tool</button>
+            <button class="btn hidden" type="button" id="toolCancelBtn">Cancel edit</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-box">
+        <h2>All tools</h2>
+        <div class="entity-list" id="toolsList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Videos -->
+    <section class="tab-page" id="tab-videos">
+      <h1>Tutorial Videos</h1>
+      <p class="page-sub">Paste a YouTube link (or just the video ID) — the site shows it as a watch-only player.</p>
+      <div class="panel-box">
+        <h2 id="videoFormTitle">➕ Add a video</h2>
+        <form id="videoForm">
+          <input type="hidden" id="videoId">
+          <div class="form-grid">
+            <div class="field"><label for="videoTitle">Title *</label><input id="videoTitle" required placeholder="QuickVid full setup tutorial"></div>
+            <div class="field"><label for="videoSort">Sort order</label><input id="videoSort" type="number" value="0"></div>
+            <div class="field full"><label for="videoYoutube">YouTube URL or video ID *</label><input id="videoYoutube" required placeholder="https://www.youtube.com/watch?v=…"></div>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="videoPublished" checked> Published (visible on the site)</label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit" id="videoSaveBtn">Save Video</button>
+            <button class="btn hidden" type="button" id="videoCancelBtn">Cancel edit</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-box">
+        <h2>All videos</h2>
+        <div class="entity-list" id="videosList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Websites / demos -->
+    <section class="tab-page" id="tab-demos">
+      <h1>Websites</h1>
+      <p class="page-sub">The demo / portfolio websites shown on the site.</p>
+      <div class="panel-box">
+        <h2 id="demoFormTitle">➕ Add a website</h2>
+        <form id="demoForm">
+          <input type="hidden" id="demoId">
+          <div class="form-grid">
+            <div class="field"><label for="demoName">Name *</label><input id="demoName" required placeholder="The Wildcut"></div>
+            <div class="field"><label for="demoSort">Sort order</label><input id="demoSort" type="number" value="0"></div>
+            <div class="field full"><label for="demoUrl">Website URL *</label><input id="demoUrl" required placeholder="https://example.com"></div>
+            <div class="field full"><label for="demoDesc">Description</label><textarea id="demoDesc" rows="2" placeholder="What is this website?"></textarea></div>
+            <div class="field full"><label for="demoImage">Image URL (optional screenshot)</label><input id="demoImage" placeholder="https://… or /media/shot.jpg"></div>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="demoPublished" checked> Published (visible on the site)</label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit" id="demoSaveBtn">Save Website</button>
+            <button class="btn hidden" type="button" id="demoCancelBtn">Cancel edit</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-box">
+        <h2>All websites</h2>
+        <div class="entity-list" id="demosList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="tab-page" id="tab-settings">
+      <h1>Settings</h1>
+      <p class="page-sub">Change the admin account password.</p>
+      <div class="panel-box" style="max-width:520px">
+        <h2>🔑 Change password</h2>
+        <form id="pwForm">
+          <div class="field"><label for="pwCurrent">Current password</label><input id="pwCurrent" type="password" autocomplete="current-password" required></div>
+          <div class="field"><label for="pwNew">New password (min 8 characters)</label><input id="pwNew" type="password" autocomplete="new-password" required></div>
+          <div class="field"><label for="pwAgain">New password again</label><input id="pwAgain" type="password" autocomplete="new-password" required></div>
+          <div class="form-actions"><button class="btn primary" type="submit">Update Password</button></div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast-zone" id="toastZone"></div>
+<script src="/assets/js/admin.js"></script>
+</body>
+</html>
