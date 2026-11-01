@@ -18,6 +18,7 @@ export function readToolFields(body, base = {}) {
     file_path: body?.file_path !== undefined ? cleanStr(body.file_path, 300) : base.file_path || '',
     external_url: body?.external_url !== undefined ? cleanStr(body.external_url, 500) : base.external_url || '',
     price: body?.price !== undefined ? cleanStr(body.price, 40) : base.price || '',
+    logo: body?.logo !== undefined ? cleanStr(body.logo, 500) : base.logo || '',
     sort_order: body?.sort_order !== undefined ? clampInt(body.sort_order, -9999, 9999, 0) : base.sort_order ?? 0,
     published: body?.published !== undefined ? (body.published ? 1 : 0) : base.published ?? 1,
   };
@@ -65,12 +66,12 @@ export async function onRequestPost({ request, env }) {
     if (error) return fail(400, error);
 
     const result = await env.DB.prepare(
-      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, price, demo_youtube, sort_order, published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, price, demo_youtube, logo, sort_order, published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         fields.name, fields.tagline, fields.description, fields.version, fields.size_label,
-        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube,
+        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube, fields.logo,
         fields.sort_order, fields.published
       )
       .run();

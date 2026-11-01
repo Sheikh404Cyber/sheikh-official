@@ -276,6 +276,7 @@ const toolsMgr = entityManager({
     size_label: $('#toolSize').value,
     price: $('#toolPrice').value,
     demo_youtube: $('#toolDemo').value,
+    logo: $('#toolLogo').value,
     kind: $('#toolKind').value,
     file_path: $('#toolFile').value,
     external_url: $('#toolUrl').value,
@@ -291,6 +292,7 @@ const toolsMgr = entityManager({
     $('#toolSize').value = t.size_label || '';
     $('#toolPrice').value = t.price || '';
     $('#toolDemo').value = t.demo_youtube ? `https://www.youtube.com/watch?v=${t.demo_youtube}` : '';
+    $('#toolLogo').value = t.logo || '';
     $('#toolKind').value = t.kind || 'file';
     $('#toolSort').value = t.sort_order ?? 0;
     $('#toolFile').value = t.file_path || '';

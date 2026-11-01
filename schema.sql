@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS tools (
   external_url TEXT NOT NULL DEFAULT '',
   price        TEXT NOT NULL DEFAULT '',
   demo_youtube TEXT NOT NULL DEFAULT '',
+  logo         TEXT NOT NULL DEFAULT '',
   sort_order   INTEGER NOT NULL DEFAULT 0,
   published    INTEGER NOT NULL DEFAULT 1,
   created_at   TEXT NOT NULL DEFAULT (datetime('now'))

@@ -1,29 +1,29 @@
-/* Sheikh-OFFICIAL — cinematic dark theme, turquoise accent, Noto Serif. */
-/* Noto Serif is self-hosted (latin subset woff2) — no external font requests. */
+/* Sheikh-OFFICIAL — cinematic dark theme, turquoise accent, Poppins. */
+/* Poppins is self-hosted (latin subset woff2) — no external font requests. */
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('/assets/fonts/notoserif-400.woff2') format('woff2');
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-400.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('/assets/fonts/notoserif-600.woff2') format('woff2');
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-600.woff2') format('woff2');
   font-weight: 600; font-style: normal; font-display: swap;
 }
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('/assets/fonts/notoserif-700.woff2') format('woff2');
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-700.woff2') format('woff2');
   font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('/assets/fonts/notoserif-800.woff2') format('woff2');
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-800.woff2') format('woff2');
   font-weight: 800; font-style: normal; font-display: swap;
 }
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('/assets/fonts/notoserif-900.woff2') format('woff2');
-  font-weight: 900; font-style: normal; font-display: swap;
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-500.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
 }
 
 :root {
@@ -47,7 +47,7 @@
 html { scroll-behavior: smooth; }
 html, body { overflow-x: hidden; }
 body {
-  font-family: 'Noto Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  font-family: 'Poppins', 'Hind Siliguri', 'Segoe UI', Tahoma, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -202,10 +202,10 @@ img { max-width: 100%; }
 .marquee { overflow: hidden; padding: 20px 0; border-bottom: 1px solid var(--border-soft); }
 .marquee-track { display: flex; gap: 0; width: max-content; animation: marqueeMove 26s linear infinite; }
 .marquee-track span {
-  font-size: 20px; font-weight: 900; letter-spacing: 0.22em; color: transparent;
-  -webkit-text-stroke: 1px rgba(45, 212, 191, 0.4); padding: 0 18px; white-space: nowrap;
+  font-size: 13.5px; font-weight: 500; letter-spacing: 0.38em; text-transform: uppercase;
+  color: var(--muted); padding: 0 26px; white-space: nowrap;
 }
-.marquee-track span.fill { color: var(--acc); -webkit-text-stroke: 0; }
+.marquee-track span.fill { color: var(--acc); }
 @keyframes marqueeMove { to { transform: translateX(-50%); } }
 
 /* ---------- sections ---------- */
@@ -452,3 +452,31 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 }
 
 .logo-img { height: 38px; width: auto; display: block; filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.35)); }
+
+/* ---------- tool logo in card icon ---------- */
+.card .icon.has-logo { padding: 6px; }
+.card .icon.has-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; display: block; }
+
+/* ---------- theme toggle ---------- */
+.theme-btn {
+  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--border-soft); background: rgba(255, 255, 255, 0.03); color: var(--text);
+  font-size: 16px; line-height: 1; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; flex: none;
+}
+.theme-btn:hover { transform: translateY(-2px); border-color: var(--border); box-shadow: 0 8px 18px rgba(45, 212, 191, 0.15); }
+
+/* ---------- light (day) theme ---------- */
+:root { color-scheme: dark; }
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f7f6; --bg2: #e8f0ee; --surface: #ffffff; --surface2: #edf3f2;
+  --border: rgba(13, 148, 136, 0.3); --border-soft: rgba(9, 45, 45, 0.12);
+  --acc-soft: rgba(13, 148, 136, 0.1);
+  --text: #0b1c20; --muted: #54707a;
+}
+[data-theme="light"] .site-header { background: rgba(255, 255, 255, 0.85); }
+[data-theme="light"] .photo-card .tag { background: #ffffff; }
+[data-theme="light"] .toast { background: #ffffff; color: var(--text); }
+[data-theme="light"] .theme-btn { background: rgba(9, 45, 45, 0.04); }
+[data-theme="light"] .social-row a { background: rgba(9, 45, 45, 0.03); }
+[data-theme="light"] .card { box-shadow: 0 14px 34px rgba(9, 45, 45, 0.08); }

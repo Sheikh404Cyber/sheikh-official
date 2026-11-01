@@ -9,6 +9,7 @@
 <meta property="og:title" content="SHEIKH OFFICIAL — Amin Sheikh | Digital Creator & Tool Builder">
 <meta property="og:image" content="/media/profile.jpg">
 <link rel="icon" type="image/png" href="/favicon.png">
+<script>try{if(localStorage.getItem('so_theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -23,7 +24,8 @@
       <a href="/#about">About</a>
       <a href="/#contact">Contact</a>
     </nav>
-    <div class="header-actions">
+    <button class="theme-btn" type="button" data-theme-btn aria-label="Switch to day mode">☀️</button>
+      <div class="header-actions">
       <a class="btn primary small" href="/signup">Sign Up</a>
     </div>
   </div>
@@ -49,5 +51,6 @@
 
 <div class="toast-zone" id="toastZone"></div>
 <script src="/assets/js/auth.js"></script>
+<script src="/assets/js/theme.js" defer></script>
 </body>
 </html>

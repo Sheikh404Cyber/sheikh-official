@@ -166,7 +166,7 @@ function toolCard(tool, idx) {
     : '';
   return `
   <article class="card reveal" style="--rd:${(idx % 3) * 0.08}s">
-    <div class="icon">🛠️</div>
+    ${tool.logo ? '<div class="icon has-logo"><img src="' + esc(tool.logo) + '" alt="" loading="lazy"></div>' : '<div class="icon">🛠️</div>'}
     <h3>${esc(tool.name)}</h3>
     ${tool.tagline ? `<div class="tagline">${esc(tool.tagline)}</div>` : ''}
     ${tool.description ? `<p>${esc(tool.description)}</p>` : '<p></p>'}

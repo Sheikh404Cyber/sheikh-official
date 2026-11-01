@@ -9,7 +9,7 @@ import { getSessionUser } from '../lib/auth.js';
 import { ownedToolIds } from '../lib/site.js';
 
 const PUBLIC_TOOL_COLS =
-  'id, name, tagline, description, version, size_label, kind, price, demo_youtube, sort_order, created_at';
+  'id, name, tagline, description, version, size_label, kind, price, demo_youtube, logo, sort_order, created_at';
 
 export async function onRequestGet({ request, env }) {
   try {

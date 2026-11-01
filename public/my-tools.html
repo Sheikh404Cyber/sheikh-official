@@ -7,6 +7,7 @@
 <meta name="description" content="The SHEIKH OFFICIAL tools you own — download them any time.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="/favicon.png">
+<script>try{if(localStorage.getItem('so_theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -22,7 +23,8 @@
       <a href="/#about">About</a>
       <a href="/#contact">Contact</a>
     </nav>
-    <div class="header-actions" id="headerActions"></div>
+    <button class="theme-btn" type="button" data-theme-btn aria-label="Switch to day mode">☀️</button>
+      <div class="header-actions" id="headerActions"></div>
   </div>
 </header>
 
@@ -50,5 +52,6 @@
 
 <div class="toast-zone" id="toastZone"></div>
 <script src="/assets/js/my-tools.js"></script>
+<script src="/assets/js/theme.js" defer></script>
 </body>
 </html>
