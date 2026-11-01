@@ -18,6 +18,9 @@ export function readToolFields(body, base = {}) {
     file_path: body?.file_path !== undefined ? cleanStr(body.file_path, 300) : base.file_path || '',
     external_url: body?.external_url !== undefined ? cleanStr(body.external_url, 500) : base.external_url || '',
     price: body?.price !== undefined ? cleanStr(body.price, 40) : base.price || '',
+    price_amount: body?.price_amount !== undefined ? (body.price_amount === '' || body.price_amount === null ? null : clampInt(body.price_amount, 0, 100000000, 0)) : base.price_amount ?? null,
+    price_period: body?.price_period !== undefined ? (['once', 'month', 'year'].includes(body.price_period) ? body.price_period : 'once') : base.price_period || 'once',
+    price_compare: body?.price_compare !== undefined ? (body.price_compare === '' || body.price_compare === null ? null : clampInt(body.price_compare, 0, 100000000, 0)) : base.price_compare ?? null,
     logo: body?.logo !== undefined ? cleanStr(body.logo, 500) : base.logo || '',
     sort_order: body?.sort_order !== undefined ? clampInt(body.sort_order, -9999, 9999, 0) : base.sort_order ?? 0,
     published: body?.published !== undefined ? (body.published ? 1 : 0) : base.published ?? 1,
@@ -66,12 +69,12 @@ export async function onRequestPost({ request, env }) {
     if (error) return fail(400, error);
 
     const result = await env.DB.prepare(
-      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, price, demo_youtube, logo, sort_order, published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, price, demo_youtube, logo, price_amount, price_period, price_compare, sort_order, published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         fields.name, fields.tagline, fields.description, fields.version, fields.size_label,
-        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube, fields.logo,
+        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube, fields.logo, fields.price_amount, fields.price_period, fields.price_compare,
         fields.sort_order, fields.published
       )
       .run();

@@ -6,7 +6,7 @@
 <title>Admin — AMIN SHEIKH</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="/favicon.png">
-<link rel="stylesheet" href="/assets/css/style.css?v=8">
+<link rel="stylesheet" href="/assets/css/style.css?v=9">
 <link rel="stylesheet" href="/assets/css/admin.css?v=7">
 </head>
 <body>
@@ -87,7 +87,10 @@
             <div class="field full"><label for="toolDesc">Description</label><textarea id="toolDesc" rows="3" placeholder="What does it do?"></textarea></div>
             <div class="field"><label for="toolVersion">Version</label><input id="toolVersion" placeholder="2.0"></div>
             <div class="field"><label for="toolSize">Size label</label><input id="toolSize" placeholder="95 MB"></div>
-            <div class="field"><label for="toolPrice">Price (shown on the card)</label><input id="toolPrice" placeholder="৳499 — leave empty for no price"></div>
+            <div class="field"><label for="toolPriceAmount">Price amount (৳)</label><input id="toolPriceAmount" type="number" min="0" placeholder="100 — empty = no price"></div>
+            <div class="field"><label for="toolPricePeriod">Billing period</label><select id="toolPricePeriod"><option value="once">One-time</option><option value="month">Monthly</option><option value="year">Yearly</option></select></div>
+            <div class="field"><label for="toolPriceCompare">Regular price (৳, optional — strike-through)</label><input id="toolPriceCompare" type="number" min="0" placeholder="200"></div>
+            <div class="field"><label for="toolPrice">Price note (optional free text)</label><input id="toolPrice" placeholder="e.g. Launch offer"></div>
             <div class="field"><label for="toolDemo">Demo YouTube (URL or ID)</label><input id="toolDemo" placeholder="https://www.youtube.com/watch?v=…"></div>
             <div class="field"><label for="toolLogo">Logo image URL (optional)</label><input id="toolLogo" placeholder="/media/tool-quickvid.png"></div>
             <div class="field"><label for="toolKind">Download type</label>

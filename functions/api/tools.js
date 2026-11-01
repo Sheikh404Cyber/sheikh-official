@@ -9,7 +9,7 @@ import { getSessionUser } from '../lib/auth.js';
 import { ownedToolIds } from '../lib/site.js';
 
 const PUBLIC_TOOL_COLS =
-  'id, name, tagline, description, version, size_label, kind, price, demo_youtube, logo, sort_order, created_at';
+  'id, name, tagline, description, version, size_label, kind, price, price_amount, price_period, price_compare, demo_youtube, logo, sort_order, created_at';
 
 export async function onRequestGet({ request, env }) {
   try {
@@ -18,7 +18,12 @@ export async function onRequestGet({ request, env }) {
       `SELECT ${PUBLIC_TOOL_COLS} FROM tools WHERE published = 1 ORDER BY sort_order ASC, id ASC`
     ).all();
     const owned = await ownedToolIds(env.DB, user);
-    const tools = (result.results || []).map((t) => ({ ...t, owned: owned.has(t.id) }));
+    const tools = (result.results || []).map((t) => {
+      const label = t.price_amount
+        ? `৳${t.price_amount}${t.price_period === 'month' ? '/month' : t.price_period === 'year' ? '/year' : ''}`
+        : t.price || '';
+      return { ...t, owned: owned.has(t.id), price_label: label };
+    });
     return json({
       ok: true,
       user: user

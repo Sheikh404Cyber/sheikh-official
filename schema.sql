@@ -40,6 +40,9 @@ CREATE TABLE IF NOT EXISTS tools (
   price        TEXT NOT NULL DEFAULT '',
   demo_youtube TEXT NOT NULL DEFAULT '',
   logo         TEXT NOT NULL DEFAULT '',
+  price_amount INTEGER,
+  price_period TEXT NOT NULL DEFAULT 'once',
+  price_compare INTEGER,
   sort_order   INTEGER NOT NULL DEFAULT 0,
   published    INTEGER NOT NULL DEFAULT 1,
   created_at   TEXT NOT NULL DEFAULT (datetime('now'))

@@ -148,7 +148,7 @@ function setCounter(id, value) {
 
 /* ---------- tools ---------- */
 function buyLink(tool) {
-  const msg = `Assalamu Alaikum! Ami SHEIKH OFFICIAL theke '${tool.name}'${tool.price ? ` (${tool.price})` : ''} kinte chai.`;
+  const msg = `Assalamu Alaikum! Ami SHEIKH OFFICIAL theke '${tool.name}'${tool.price_label ? ` (${tool.price_label})` : ''} kinte chai.`;
   return `https://wa.me/${waNumber()}?text=${encodeURIComponent(msg)}`;
 }
 
@@ -171,12 +171,12 @@ function toolCard(tool, idx) {
     ${tool.tagline ? `<div class="tagline">${esc(tool.tagline)}</div>` : ''}
     ${tool.description ? `<p>${esc(tool.description)}</p>` : '<p></p>'}
     <div class="chips">
-      ${tool.price ? `<span class="chip price">💰 ${esc(tool.price)}</span>` : ''}
       ${tool.version ? `<span class="chip acc">v${esc(tool.version)}</span>` : ''}
       ${tool.size_label ? `<span class="chip">${esc(tool.size_label)}</span>` : ''}
       <span class="chip">${tool.kind === 'link' ? 'External download' : 'Direct download'}</span>
     </div>
     ${demo}
+    ${tool.price_amount ? `<div class="price-row"><span class="price-amount">৳${esc(tool.price_amount)}</span><span class="price-period">${tool.price_period === 'month' ? '/month' : tool.price_period === 'year' ? '/year' : ' one-time'}</span>${tool.price_compare && tool.price_compare > tool.price_amount ? `<span class="price-compare">৳${esc(tool.price_compare)}</span>` : ''}${tool.price ? `<span class="price-note">${esc(tool.price)}</span>` : ''}</div>` : tool.price ? `<div class="price-row"><span class="price-note">${esc(tool.price)}</span></div>` : ''}
     <div class="foot">${badge}${button}</div>
   </article>`;
 }

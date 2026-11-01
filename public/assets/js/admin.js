@@ -267,7 +267,7 @@ const toolsMgr = entityManager({
   cancelSel: '#toolCancelBtn',
   title: (t) => t.name,
   subtitle: (t) =>
-    `${t.tagline || ''}${t.version ? ` · v${t.version}` : ''}${t.size_label ? ` · ${t.size_label}` : ''}${t.price ? ` · ${t.price}` : ''} · ${t.kind === 'link' ? t.external_url : t.file_path}`,
+    `${t.tagline || ''}${t.version ? ` · v${t.version}` : ''}${t.size_label ? ` · ${t.size_label}` : ''}${t.price_amount ? ` · ৳${t.price_amount}${t.price_period === 'month' ? '/month' : t.price_period === 'year' ? '/year' : ''}` : t.price ? ` · ${t.price}` : ''} · ${t.kind === 'link' ? t.external_url : t.file_path}`,
   collect: () => ({
     name: $('#toolName').value,
     tagline: $('#toolTagline').value,
@@ -275,6 +275,9 @@ const toolsMgr = entityManager({
     version: $('#toolVersion').value,
     size_label: $('#toolSize').value,
     price: $('#toolPrice').value,
+    price_amount: $('#toolPriceAmount').value,
+    price_period: $('#toolPricePeriod').value,
+    price_compare: $('#toolPriceCompare').value,
     demo_youtube: $('#toolDemo').value,
     logo: $('#toolLogo').value,
     kind: $('#toolKind').value,
@@ -291,6 +294,9 @@ const toolsMgr = entityManager({
     $('#toolVersion').value = t.version || '';
     $('#toolSize').value = t.size_label || '';
     $('#toolPrice').value = t.price || '';
+    $('#toolPriceAmount').value = t.price_amount ?? '';
+    $('#toolPricePeriod').value = t.price_period || 'once';
+    $('#toolPriceCompare').value = t.price_compare ?? '';
     $('#toolDemo').value = t.demo_youtube ? `https://www.youtube.com/watch?v=${t.demo_youtube}` : '';
     $('#toolLogo').value = t.logo || '';
     $('#toolKind').value = t.kind || 'file';
