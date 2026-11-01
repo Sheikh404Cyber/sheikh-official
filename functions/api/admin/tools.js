@@ -3,7 +3,7 @@
 
 import { json, fail, readJson, sameOrigin } from '../../lib/http.js';
 import { requireAdmin } from '../../lib/auth.js';
-import { cleanStr, clampInt, isSafeUrl } from '../../lib/util.js';
+import { cleanStr, clampInt, isSafeUrl, extractYouTubeId } from '../../lib/util.js';
 
 export function readToolFields(body, base = {}) {
   const kind = body?.kind !== undefined ? cleanStr(body.kind, 10) : base.kind || 'file';
@@ -17,9 +17,22 @@ export function readToolFields(body, base = {}) {
     kind,
     file_path: body?.file_path !== undefined ? cleanStr(body.file_path, 300) : base.file_path || '',
     external_url: body?.external_url !== undefined ? cleanStr(body.external_url, 500) : base.external_url || '',
+    price: body?.price !== undefined ? cleanStr(body.price, 40) : base.price || '',
     sort_order: body?.sort_order !== undefined ? clampInt(body.sort_order, -9999, 9999, 0) : base.sort_order ?? 0,
     published: body?.published !== undefined ? (body.published ? 1 : 0) : base.published ?? 1,
   };
+  // Demo video: accept a YouTube URL or bare ID (or empty to clear); store the bare ID.
+  if (body?.demo_youtube !== undefined) {
+    const raw = cleanStr(body.demo_youtube, 500);
+    if (raw === '') fields.demo_youtube = '';
+    else {
+      const id = extractYouTubeId(raw);
+      if (!id) return { error: 'Demo video must be a valid YouTube URL or video ID (or empty)' };
+      fields.demo_youtube = id;
+    }
+  } else {
+    fields.demo_youtube = base.demo_youtube || '';
+  }
   if (!fields.name) return { error: 'Tool name is required' };
   if (fields.kind === 'file' && fields.file_path && !fields.file_path.startsWith('/')) {
     return { error: 'File path must start with / (a path on this site)' };
@@ -52,12 +65,13 @@ export async function onRequestPost({ request, env }) {
     if (error) return fail(400, error);
 
     const result = await env.DB.prepare(
-      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, sort_order, published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO tools (name, tagline, description, version, size_label, kind, file_path, external_url, price, demo_youtube, sort_order, published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         fields.name, fields.tagline, fields.description, fields.version, fields.size_label,
-        fields.kind, fields.file_path, fields.external_url, fields.sort_order, fields.published
+        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube,
+        fields.sort_order, fields.published
       )
       .run();
     const tool = await env.DB.prepare('SELECT * FROM tools WHERE id = ?').bind(result.meta.last_row_id).first();

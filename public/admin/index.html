@@ -32,6 +32,10 @@
     <button class="tab-btn" data-tab="tools" type="button">🛠️ Tools</button>
     <button class="tab-btn" data-tab="videos" type="button">🎬 Videos</button>
     <button class="tab-btn" data-tab="demos" type="button">🌐 Websites</button>
+    <button class="tab-btn" data-tab="photos" type="button">🖼️ Photos</button>
+    <button class="tab-btn" data-tab="reviews" type="button">⭐ Reviews</button>
+    <button class="tab-btn" data-tab="faq" type="button">❓ FAQ</button>
+    <button class="tab-btn" data-tab="orders" type="button">🧾 Orders <span class="pill gold hidden" id="ordersBadge"></span></button>
     <button class="tab-btn" data-tab="settings" type="button">⚙️ Settings</button>
   </aside>
 
@@ -58,6 +62,15 @@
       <div class="panel-box">
         <div id="usersTable"><p class="empty-line">Loading…</p></div>
       </div>
+      <div class="panel-box hidden" id="userToolsPanel">
+        <h2 id="userToolsTitle">Tools access</h2>
+        <p class="page-sub" style="margin-bottom:14px">Tick the tools this user owns. The <b>Download</b> switch in the table above grants ALL tools at once; per-tool grants below are for single purchases.</p>
+        <div class="grant-list" id="userToolsList"></div>
+        <div class="form-actions">
+          <button class="btn primary" type="button" id="userToolsSave">Save access</button>
+          <button class="btn" type="button" id="userToolsClose">Close</button>
+        </div>
+      </div>
     </section>
 
     <!-- Tools -->
@@ -74,6 +87,8 @@
             <div class="field full"><label for="toolDesc">Description</label><textarea id="toolDesc" rows="3" placeholder="What does it do?"></textarea></div>
             <div class="field"><label for="toolVersion">Version</label><input id="toolVersion" placeholder="2.0"></div>
             <div class="field"><label for="toolSize">Size label</label><input id="toolSize" placeholder="95 MB"></div>
+            <div class="field"><label for="toolPrice">Price (shown on the card)</label><input id="toolPrice" placeholder="৳499 — leave empty for no price"></div>
+            <div class="field"><label for="toolDemo">Demo YouTube (URL or ID)</label><input id="toolDemo" placeholder="https://www.youtube.com/watch?v=…"></div>
             <div class="field"><label for="toolKind">Download type</label>
               <select id="toolKind"><option value="file">File on this site</option><option value="link">External link (GitHub release…)</option></select></div>
             <div class="field"><label for="toolSort">Sort order</label><input id="toolSort" type="number" value="0"></div>
@@ -147,10 +162,88 @@
       </div>
     </section>
 
+    <!-- Photos -->
+    <section class="tab-page" id="tab-photos">
+      <h1>Photos</h1>
+      <p class="page-sub">The three photos in the hero strip at the top of the homepage. For each slot: paste an image URL (or a path like /media/photo-1.jpg) and save, OR upload an image file (JPG / PNG / WebP, max 900 KB) — uploads are stored in the database and served by the site itself.</p>
+      <div id="photoSlots"><p class="empty-line">Loading…</p></div>
+    </section>
+
+    <!-- Reviews / testimonials -->
+    <section class="tab-page" id="tab-reviews">
+      <h1>Reviews</h1>
+      <p class="page-sub">Buyer testimonials shown in the "What Buyers Say" section. The section hides itself while there are no visible reviews.</p>
+      <div class="panel-box">
+        <h2 id="testiFormTitle">➕ Add a review</h2>
+        <form id="testiForm">
+          <input type="hidden" id="testiId">
+          <div class="form-grid">
+            <div class="field"><label for="testiName">Buyer name *</label><input id="testiName" required placeholder="Karim Rahman"></div>
+            <div class="field"><label for="testiMeta">Meta (e.g. QuickVid buyer)</label><input id="testiMeta" placeholder="QuickVid buyer"></div>
+            <div class="field"><label for="testiSort">Sort order</label><input id="testiSort" type="number" value="0"></div>
+            <div class="field full"><label for="testiText">Review text *</label><textarea id="testiText" rows="3" required placeholder="What did the buyer say?"></textarea></div>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="testiVisible" checked> Visible on the site</label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit" id="testiSaveBtn">Save Review</button>
+            <button class="btn hidden" type="button" id="testiCancelBtn">Cancel edit</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-box">
+        <h2>All reviews</h2>
+        <div class="entity-list" id="testiList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="tab-page" id="tab-faq">
+      <h1>FAQ</h1>
+      <p class="page-sub">Questions and answers for the FAQ section on the homepage. The section hides itself while there are no visible FAQs.</p>
+      <div class="panel-box">
+        <h2 id="faqFormTitle">➕ Add an FAQ</h2>
+        <form id="faqForm">
+          <input type="hidden" id="faqId">
+          <div class="form-grid">
+            <div class="field full"><label for="faqQ">Question *</label><input id="faqQ" required placeholder="How do I buy a tool?"></div>
+            <div class="field"><label for="faqSort">Sort order</label><input id="faqSort" type="number" value="0"></div>
+            <div class="field full"><label for="faqA">Answer *</label><textarea id="faqA" rows="3" required placeholder="The answer visitors will read…"></textarea></div>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="faqVisible" checked> Visible on the site</label>
+          <div class="form-actions">
+            <button class="btn primary" type="submit" id="faqSaveBtn">Save FAQ</button>
+            <button class="btn hidden" type="button" id="faqCancelBtn">Cancel edit</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-box">
+        <h2>All FAQs</h2>
+        <div class="entity-list" id="faqList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- Orders -->
+    <section class="tab-page" id="tab-orders">
+      <h1>Orders</h1>
+      <p class="page-sub">Service requests from the Hire Me form on the homepage, newest first. Unseen requests are highlighted — contact the person, then mark them seen.</p>
+      <div class="panel-box">
+        <div id="ordersList"><p class="empty-line">Loading…</p></div>
+      </div>
+    </section>
+
     <!-- Settings -->
     <section class="tab-page" id="tab-settings">
       <h1>Settings</h1>
-      <p class="page-sub">Change the admin account password.</p>
+      <p class="page-sub">Sales contact numbers and the admin account password.</p>
+      <div class="panel-box" style="max-width:520px">
+        <h2>💳 Sales &amp; payment numbers</h2>
+        <form id="salesForm">
+          <div class="field"><label for="setWhatsapp">WhatsApp number (Buy buttons)</label><input id="setWhatsapp" placeholder="8801957566098"></div>
+          <div class="field"><label for="setBkash">Bkash number (shown in How to Buy)</label><input id="setBkash" placeholder="01XXXXXXXXX — empty hides it"></div>
+          <div class="field"><label for="setNagad">Nagad number (shown in How to Buy)</label><input id="setNagad" placeholder="01XXXXXXXXX — empty hides it"></div>
+          <div class="form-actions"><button class="btn primary" type="submit">Save Numbers</button></div>
+        </form>
+      </div>
       <div class="panel-box" style="max-width:520px">
         <h2>🔑 Change password</h2>
         <form id="pwForm">

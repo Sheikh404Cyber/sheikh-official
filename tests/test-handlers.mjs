@@ -332,5 +332,257 @@ let adminCookie;
   check('logout: session gone', meAfterData.user === null);
 }
 
+/* ================= v2 upgrade ================= */
+const siteConfig = (await import('../functions/api/site-config.js')).onRequestGet;
+const adminSettingsGet = (await import('../functions/api/admin/settings.js')).onRequestGet;
+const adminSettingsPut = (await import('../functions/api/admin/settings.js')).onRequestPut;
+const adminMediaPost = (await import('../functions/api/admin/media.js')).onRequestPost;
+const mediaGet = (await import('../functions/api/media/[key].js')).onRequestGet;
+const ordersPost = (await import('../functions/api/orders.js')).onRequestPost;
+const adminOrdersGet = (await import('../functions/api/admin/orders.js')).onRequestGet;
+const adminOrderPatch = (await import('../functions/api/admin/orders/[id].js')).onRequestPatch;
+const adminOrderDelete = (await import('../functions/api/admin/orders/[id].js')).onRequestDelete;
+const adminUserToolsGet = (await import('../functions/api/admin/users/[id]/tools.js')).onRequestGet;
+const adminUserToolsPut = (await import('../functions/api/admin/users/[id]/tools.js')).onRequestPut;
+const pubTestimonials = (await import('../functions/api/testimonials.js')).onRequestGet;
+const pubFaqs = (await import('../functions/api/faqs.js')).onRequestGet;
+const adminTestiPost = (await import('../functions/api/admin/testimonials.js')).onRequestPost;
+const adminFaqPost = (await import('../functions/api/admin/faqs.js')).onRequestPost;
+
+function reqForm(path, { cookie, fields }) {
+  const fd = new FormData();
+  for (const [k, v] of Object.entries(fields)) fd.append(k, v);
+  const headers = new Headers();
+  headers.set('Origin', ORIGIN);
+  if (cookie) headers.set('Cookie', cookie);
+  return new Request(ORIGIN + path, { method: 'POST', headers, body: fd });
+}
+
+/* ---------- v2: fresh logins (earlier blocks rotated passwords/sessions) ---------- */
+let v2Admin, v2Member;
+{
+  const a = await login({ request: req('/api/auth/login', { method: 'POST', body: { email: 'aminsheikhoffial01@gmail.com', password: 'SetupPass456' } }), env });
+  v2Admin = cookieOf(a);
+  const m = await login({ request: req('/api/auth/login', { method: 'POST', body: { email: 'rahim@test.dev', password: 'memberpass1' } }), env });
+  v2Member = cookieOf(m);
+  check('v2: admin + member re-login', !!v2Admin && !!v2Member);
+}
+
+/* ---------- v2: site-config + admin settings ---------- */
+{
+  const res = await siteConfig({ request: req('/api/site-config'), env });
+  const d = await bodyOf(res);
+  check('site-config: whatsapp default', d.whatsapp_number === '8801957566098', d.whatsapp_number);
+  check('site-config: bkash/nagad empty by default', d.bkash_number === '' && d.nagad_number === '');
+  check('site-config: photo defaults', d.photo_1 === '/media/photo-1.jpg' && d.photo_2 === '/media/photo-2.jpg' && d.photo_3 === '/media/photo-3.jpg');
+  check('site-config: exactly the 7 public keys (no secrets leak)', Object.keys(d).sort().join(',') === 'bkash_number,nagad_number,ok,photo_1,photo_2,photo_3,whatsapp_number', Object.keys(d).join(','));
+
+  const asMember = await adminSettingsPut({ request: req('/api/admin/settings', { method: 'PUT', cookie: v2Member, body: { bkash_number: '01712345678' } }), env });
+  check('admin settings: non-admin PUT → 403', asMember.status === 403, `got ${asMember.status}`);
+
+  const badPhone = await adminSettingsPut({ request: req('/api/admin/settings', { method: 'PUT', cookie: v2Admin, body: { bkash_number: 'call-me-maybe' } }), env });
+  check('admin settings: invalid phone → 400', badPhone.status === 400, `got ${badPhone.status}`);
+
+  const okPut = await adminSettingsPut({ request: req('/api/admin/settings', { method: 'PUT', cookie: v2Admin, body: { bkash_number: '01712345678' } }), env });
+  check('admin settings: PUT bkash → 200', okPut.status === 200, `got ${okPut.status}`);
+
+  const badPhoto = await adminSettingsPut({ request: req('/api/admin/settings', { method: 'PUT', cookie: v2Admin, body: { photo_2: 'javascript:alert(1)' } }), env });
+  check('admin settings: unsafe photo URL → 400', badPhoto.status === 400, `got ${badPhoto.status}`);
+
+  const after = await bodyOf(await siteConfig({ request: req('/api/site-config'), env }));
+  check('site-config: reflects the saved bkash number', after.bkash_number === '01712345678', after.bkash_number);
+
+  const admGet = await bodyOf(await adminSettingsGet({ request: req('/api/admin/settings', { cookie: v2Admin }), env }));
+  check('admin settings GET: merged values', admGet.settings?.bkash_number === '01712345678' && admGet.settings?.whatsapp_number === '8801957566098');
+}
+
+/* ---------- v2: tool price + demo ---------- */
+let pricedToolId;
+{
+  const create = await adminToolsPost({
+    request: req('/api/admin/tools', { method: 'POST', cookie: v2Admin, body: { name: 'Priced Tool', tagline: 't', description: 'd', version: '1.0', size_label: '2 MB', kind: 'file', file_path: '/downloads/priced.zip', price: '৳499', demo_youtube: 'https://youtu.be/dQw4w9WgXcQ', sort_order: 9, published: true } }),
+    env,
+  });
+  const created = await bodyOf(create);
+  pricedToolId = created.tool?.id;
+  check('tools: price stored', create.status === 201 && created.tool?.price === '৳499', `got ${create.status}`);
+  check('tools: demo URL normalized to bare ID', created.tool?.demo_youtube === 'dQw4w9WgXcQ', created.tool?.demo_youtube);
+
+  const badDemo = await adminToolsPost({
+    request: req('/api/admin/tools', { method: 'POST', cookie: v2Admin, body: { name: 'Bad Demo', kind: 'file', file_path: '/downloads/x.zip', demo_youtube: 'https://example.com/nope' } }),
+    env,
+  });
+  check('tools: invalid demo → 400', badDemo.status === 400, `got ${badDemo.status}`);
+
+  const list = await bodyOf(await toolsList({ request: req('/api/tools'), env }));
+  const priced = (list.tools || []).find((t) => t.id === pricedToolId);
+  check('public tools: price + demo exposed', priced?.price === '৳499' && priced?.demo_youtube === 'dQw4w9WgXcQ');
+  check('public tools: no file_path / external_url leak', priced && priced.file_path === undefined && priced.external_url === undefined);
+  check('public tools: anon owned=false everywhere', (list.tools || []).every((t) => t.owned === false));
+}
+
+/* ---------- v2: per-tool ownership grants ---------- */
+let karimCookie, karimId;
+{
+  const res = await signup({ request: req('/api/auth/signup', { method: 'POST', body: { name: 'Karim Buyer', email: 'karim@test.dev', password: 'buyerpass1' } }), env });
+  const data = await bodyOf(res);
+  karimCookie = cookieOf(res);
+  karimId = data.user?.id;
+  check('v2: buyer signup (no permissions)', res.status === 201 && data.user?.can_download === 0);
+
+  const before = await download({ request: req(`/api/tools/${pricedToolId}/download`, { cookie: karimCookie }), env, params: { id: String(pricedToolId) } });
+  check('grants: download before grant → 403', before.status === 403, `got ${before.status}`);
+
+  const asMember = await adminUserToolsPut({ request: req(`/api/admin/users/${karimId}/tools`, { method: 'PUT', cookie: karimCookie, body: { tool_ids: [pricedToolId] } }), env, params: { id: String(karimId) } });
+  check('grants: non-admin PUT → 403', asMember.status === 403, `got ${asMember.status}`);
+
+  const badId = await adminUserToolsPut({ request: req(`/api/admin/users/${karimId}/tools`, { method: 'PUT', cookie: v2Admin, body: { tool_ids: [99999] } }), env, params: { id: String(karimId) } });
+  check('grants: unknown tool id → 400', badId.status === 400, `got ${badId.status}`);
+
+  const grant = await adminUserToolsPut({ request: req(`/api/admin/users/${karimId}/tools`, { method: 'PUT', cookie: v2Admin, body: { tool_ids: [pricedToolId, 2] } }), env, params: { id: String(karimId) } });
+  const grantData = await bodyOf(grant);
+  check('grants: PUT → 200 with both ids', grant.status === 200 && grantData.granted?.includes(pricedToolId) && grantData.granted?.includes(2), JSON.stringify(grantData));
+
+  const state = await bodyOf(await adminUserToolsGet({ request: req(`/api/admin/users/${karimId}/tools`, { cookie: v2Admin }), env, params: { id: String(karimId) } }));
+  check('grants: GET state matches', state.granted?.length === 2 && state.user?.can_download === 0 && state.tools?.length >= 4);
+
+  const list = await bodyOf(await toolsList({ request: req('/api/tools', { cookie: karimCookie }), env }));
+  const byId = Object.fromEntries((list.tools || []).map((t) => [t.id, t.owned]));
+  check('grants: owned flags per tool', byId[pricedToolId] === true && byId[2] === true && byId[1] === false && byId[3] === false, JSON.stringify(byId));
+
+  const dl = await download({ request: req(`/api/tools/${pricedToolId}/download`, { cookie: karimCookie }), env, params: { id: String(pricedToolId) } });
+  check('grants: granted tool downloads → 302', dl.status === 302, `got ${dl.status}`);
+  const dlNo = await download({ request: req('/api/tools/1/download', { cookie: karimCookie }), env, params: { id: '1' } });
+  check('grants: ungranted tool still → 403', dlNo.status === 403, `got ${dlNo.status}`);
+
+  const allList = await bodyOf(await toolsList({ request: req('/api/tools', { cookie: v2Member }), env }));
+  check('grants: can_download member owns everything', (allList.tools || []).every((t) => t.owned === true));
+
+  const revoke = await adminUserToolsPut({ request: req(`/api/admin/users/${karimId}/tools`, { method: 'PUT', cookie: v2Admin, body: { tool_ids: [] } }), env, params: { id: String(karimId) } });
+  check('grants: revoke all → 200', revoke.status === 200, `got ${revoke.status}`);
+  const after = await download({ request: req(`/api/tools/${pricedToolId}/download`, { cookie: karimCookie }), env, params: { id: String(pricedToolId) } });
+  check('grants: download after revoke → 403', after.status === 403, `got ${after.status}`);
+}
+
+/* ---------- v2: hire-me orders ---------- */
+{
+  const okRes = await ordersPost({ request: req('/api/orders', { method: 'POST', body: { name: 'Client One', contact: '01712345678', service: 'Website', message: 'Need a shop website' } }), env });
+  const okData = await bodyOf(okRes);
+  check('orders: valid POST → 201', okRes.status === 201 && !!okData.id, `got ${okRes.status}`);
+  const orderId = okData.id;
+
+  const honey = await ordersPost({ request: req('/api/orders', { method: 'POST', body: { name: 'Bot', contact: '01712345678', service: 'Website', website: 'http://spam.example' } }), env });
+  check('orders: honeypot filled → 400', honey.status === 400, `got ${honey.status}`);
+
+  const noContact = await ordersPost({ request: req('/api/orders', { method: 'POST', body: { name: 'No Contact', service: 'Website' } }), env });
+  check('orders: missing contact → 400', noContact.status === 400, `got ${noContact.status}`);
+
+  const badService = await ordersPost({ request: req('/api/orders', { method: 'POST', body: { name: 'Bad Service', contact: '01712345678', service: 'Hacking' } }), env });
+  check('orders: unknown service → 400', badService.status === 400, `got ${badService.status}`);
+
+  const asAnon = await adminOrdersGet({ request: req('/api/admin/orders'), env });
+  check('orders: admin list logged out → 401', asAnon.status === 401, `got ${asAnon.status}`);
+  const asMember = await adminOrdersGet({ request: req('/api/admin/orders', { cookie: karimCookie }), env });
+  check('orders: admin list non-admin → 403', asMember.status === 403, `got ${asMember.status}`);
+
+  const list = await bodyOf(await adminOrdersGet({ request: req('/api/admin/orders', { cookie: v2Admin }), env }));
+  const mine = (list.orders || []).find((o) => o.id === orderId);
+  check('orders: admin list contains the order, unseen', !!mine && mine.seen === 0 && mine.name === 'Client One');
+
+  const patch = await adminOrderPatch({ request: req(`/api/admin/orders/${orderId}`, { method: 'PATCH', cookie: v2Admin, body: { seen: true } }), env, params: { id: String(orderId) } });
+  const patchData = await bodyOf(patch);
+  check('orders: PATCH seen → 200 + seen=1', patch.status === 200 && patchData.order?.seen === 1, `got ${patch.status}`);
+
+  const del = await adminOrderDelete({ request: req(`/api/admin/orders/${orderId}`, { method: 'DELETE', cookie: v2Admin }), env, params: { id: String(orderId) } });
+  check('orders: DELETE → 200', del.status === 200, `got ${del.status}`);
+  const list2 = await bodyOf(await adminOrdersGet({ request: req('/api/admin/orders', { cookie: v2Admin }), env }));
+  check('orders: gone after delete', !(list2.orders || []).some((o) => o.id === orderId));
+}
+
+/* ---------- v2: media upload + serve ---------- */
+{
+  const pngB64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAwMCAO+ip1sAAAAASUVORK5CYII=';
+  const pngBytes = new Uint8Array(Buffer.from(pngB64, 'base64'));
+
+  const missing = await mediaGet({ request: req('/api/media/photo_3'), env, params: { key: 'photo_3' } });
+  check('media: no blob yet → 404', missing.status === 404, `got ${missing.status}`);
+  const bogus = await mediaGet({ request: req('/api/media/bogus'), env, params: { key: 'bogus' } });
+  check('media: unknown key → 404', bogus.status === 404, `got ${bogus.status}`);
+
+  const asMember = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: karimCookie, fields: { key: 'photo_1', file: new Blob([pngBytes], { type: 'image/png' }) } }), env });
+  check('media: non-admin upload → 403', asMember.status === 403, `got ${asMember.status}`);
+
+  const badKey = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: v2Admin, fields: { key: 'photo_9', file: new Blob([pngBytes], { type: 'image/png' }) } }), env });
+  check('media: unknown slot → 400', badKey.status === 400, `got ${badKey.status}`);
+
+  const textFile = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: v2Admin, fields: { key: 'photo_1', file: new Blob(['hello'], { type: 'text/plain' }) } }), env });
+  check('media: text file → 400', textFile.status === 400, `got ${textFile.status}`);
+
+  const fakePng = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: v2Admin, fields: { key: 'photo_1', file: new Blob(['not an image at all'], { type: 'image/png' }) } }), env });
+  check('media: png-declared text bytes → 400 (magic bytes)', fakePng.status === 400, `got ${fakePng.status}`);
+
+  const big = new Uint8Array(901 * 1024);
+  big.set(pngBytes.slice(0, 8), 0);
+  const tooBig = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: v2Admin, fields: { key: 'photo_1', file: new Blob([big], { type: 'image/png' }) } }), env });
+  check('media: >900 KB → 400', tooBig.status === 400, `got ${tooBig.status}`);
+
+  const up = await adminMediaPost({ request: reqForm('/api/admin/media', { cookie: v2Admin, fields: { key: 'photo_1', file: new Blob([pngBytes], { type: 'image/png' }) } }), env });
+  const upData = await bodyOf(up);
+  check('media: valid PNG upload → 200', up.status === 200 && upData.url === '/api/media/photo_1', `got ${up.status}`);
+
+  const served = await mediaGet({ request: req('/api/media/photo_1'), env, params: { key: 'photo_1' } });
+  const servedBytes = new Uint8Array(await served.arrayBuffer());
+  check('media: served 200 + image/png', served.status === 200 && (served.headers.get('Content-Type') || '').includes('image/png'), `got ${served.status}`);
+  check('media: served bytes identical', servedBytes.length === pngBytes.length && servedBytes.every((b, i) => b === pngBytes[i]));
+
+  const cfg = await bodyOf(await siteConfig({ request: req('/api/site-config'), env }));
+  check('media: site-config photo_1 now the blob URL', cfg.photo_1 === '/api/media/photo_1', cfg.photo_1);
+}
+
+/* ---------- v2: testimonials + faqs ---------- */
+{
+  const empty = await bodyOf(await pubTestimonials({ request: req('/api/testimonials'), env }));
+  check('testimonials: none initially', (empty.testimonials || []).length === 0);
+
+  const add = await adminTestiPost({ request: req('/api/admin/testimonials', { method: 'POST', cookie: v2Admin, body: { name: 'Test Buyer', text: 'QuickVid saved my channel hours.', meta: 'QuickVid buyer', sort: 1, visible: true } }), env });
+  check('testimonials: admin POST → 201', add.status === 201, `got ${add.status}`);
+  const hidden = await adminTestiPost({ request: req('/api/admin/testimonials', { method: 'POST', cookie: v2Admin, body: { name: 'Secret Buyer', text: 'Not shown.', visible: false } }), env });
+  check('testimonials: hidden POST → 201', hidden.status === 201, `got ${hidden.status}`);
+
+  const pub = await bodyOf(await pubTestimonials({ request: req('/api/testimonials'), env }));
+  check('testimonials: public sees only the visible one', pub.testimonials?.length === 1 && pub.testimonials[0].name === 'Test Buyer', JSON.stringify(pub).slice(0, 140));
+
+  const faqAdd = await adminFaqPost({ request: req('/api/admin/faqs', { method: 'POST', cookie: v2Admin, body: { q: 'Test question?', a: 'Test answer.', visible: true } }), env });
+  check('faqs: admin POST → 201', faqAdd.status === 201, `got ${faqAdd.status}`);
+  const pubFaq = await bodyOf(await pubFaqs({ request: req('/api/faqs'), env }));
+  check('faqs: public list has the new FAQ', (pubFaq.faqs || []).some((f) => f.q === 'Test question?'));
+}
+
+/* ---------- v2: migration 0003 applies cleanly on a 0001+0002+seed DB ---------- */
+{
+  const raw2 = new DatabaseSync(':memory:');
+  raw2.exec(readFileSync(join(root, 'migrations/0001_init.sql'), 'utf8'));
+  raw2.exec(readFileSync(join(root, 'migrations/0002_setup.sql'), 'utf8'));
+  raw2.exec(readFileSync(join(root, 'seed.sql'), 'utf8'));
+  raw2.exec(readFileSync(join(root, 'migrations/0003_v2.sql'), 'utf8'));
+
+  const cols = raw2.prepare('PRAGMA table_info(tools)').all().map((r) => r.name);
+  check('migration 0003: tools gains price + demo_youtube', cols.includes('price') && cols.includes('demo_youtube'), cols.join(','));
+  const tables = raw2.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all().map((r) => r.name);
+  check('migration 0003: new tables exist', ['user_tools', 'media_blobs', 'testimonials', 'faqs', 'orders'].every((t) => tables.includes(t)), tables.join(','));
+  const faqCount = raw2.prepare('SELECT COUNT(*) AS n FROM faqs').get().n;
+  check('migration 0003: 3 starter FAQs seeded', faqCount === 3, `got ${faqCount}`);
+  const toolCount = raw2.prepare('SELECT COUNT(*) AS n FROM tools').get().n;
+  check('migration 0003: seeded tools intact', toolCount === 3, `got ${toolCount}`);
+
+  const env2 = { DB: new MockDB(raw2) };
+  const faqsRes = await pubFaqs({ request: req('/api/faqs'), env: env2 });
+  const faqsData = await bodyOf(faqsRes);
+  check('migration 0003: seeded FAQs served publicly', (faqsData.faqs || []).length === 3);
+  const cfgRes = await siteConfig({ request: req('/api/site-config'), env: env2 });
+  const cfgData = await bodyOf(cfgRes);
+  check('migration 0003: site-config defaults work on migrated DB', cfgData.whatsapp_number === '8801957566098' && cfgData.photo_1 === '/media/photo-1.jpg');
+}
+
 console.log(`\nhandler tests: ${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

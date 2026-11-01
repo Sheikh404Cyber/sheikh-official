@@ -20,11 +20,12 @@ export async function onRequestPut({ request, env, params }) {
 
     await env.DB.prepare(
       `UPDATE tools SET name = ?, tagline = ?, description = ?, version = ?, size_label = ?,
-        kind = ?, file_path = ?, external_url = ?, sort_order = ?, published = ? WHERE id = ?`
+        kind = ?, file_path = ?, external_url = ?, price = ?, demo_youtube = ?, sort_order = ?, published = ? WHERE id = ?`
     )
       .bind(
         fields.name, fields.tagline, fields.description, fields.version, fields.size_label,
-        fields.kind, fields.file_path, fields.external_url, fields.sort_order, fields.published, target.id
+        fields.kind, fields.file_path, fields.external_url, fields.price, fields.demo_youtube,
+        fields.sort_order, fields.published, target.id
       )
       .run();
 

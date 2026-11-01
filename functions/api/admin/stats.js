@@ -13,12 +13,16 @@ export async function onRequestGet({ request, env }) {
       return row?.n ?? 0;
     };
 
-    const [users, tools, videos, demos, downloads, signups, recentDownloads] = await Promise.all([
+    const [users, tools, videos, demos, downloads, orders, unseenOrders, testimonials, faqs, signups, recentDownloads] = await Promise.all([
       count('SELECT COUNT(*) AS n FROM users'),
       count('SELECT COUNT(*) AS n FROM tools'),
       count('SELECT COUNT(*) AS n FROM videos'),
       count('SELECT COUNT(*) AS n FROM demos'),
       count('SELECT COUNT(*) AS n FROM downloads'),
+      count('SELECT COUNT(*) AS n FROM orders'),
+      count('SELECT COUNT(*) AS n FROM orders WHERE seen = 0'),
+      count('SELECT COUNT(*) AS n FROM testimonials'),
+      count('SELECT COUNT(*) AS n FROM faqs'),
       env.DB.prepare(
         'SELECT id, name, email, is_admin, can_download, blocked, created_at FROM users ORDER BY id DESC LIMIT 10'
       ).all(),
@@ -34,7 +38,7 @@ export async function onRequestGet({ request, env }) {
 
     return json({
       ok: true,
-      counts: { users, tools, videos, demos, downloads },
+      counts: { users, tools, videos, demos, downloads, orders, unseenOrders, testimonials, faqs },
       recentSignups: signups.results || [],
       recentDownloads: recentDownloads.results || [],
     });

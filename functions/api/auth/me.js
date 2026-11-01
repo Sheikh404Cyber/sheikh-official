@@ -1,5 +1,5 @@
 // GET /api/auth/me — who is signed in (or user: null). Drives the header
-// (Login/Sign Up buttons vs. name + Logout, and the Admin link).
+// (Login/Sign Up buttons vs. My Tools + name + Logout).
 
 import { json, fail } from '../../lib/http.js';
 import { getSessionUser } from '../../lib/auth.js';
