@@ -17,7 +17,7 @@ export async function onRequestGet({ env }) {
       photo_1: s.photo_1,
       photo_2: s.photo_2,
       photo_3: s.photo_3,
-    });
+    }, 200, { 'Cache-Control': 'no-store' });
   } catch {
     return fail(500, 'Server error');
   }

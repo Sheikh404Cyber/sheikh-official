@@ -26,7 +26,7 @@ export async function onRequestGet({ request, env }) {
         : null,
       canDownload: owned.size > 0,
       tools,
-    });
+    }, 200, { 'Cache-Control': 'no-store' });
   } catch {
     return fail(500, 'Server error');
   }

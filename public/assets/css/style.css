@@ -442,6 +442,15 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 @media (max-width: 480px) {
   .header-actions .hide-sm { display: none; }
   .user-chip { display: none; }
+  .site-header .wrap { gap: 10px; }
+  .logo { gap: 7px; font-size: 14px; letter-spacing: 0.09em; }
+  .logo-img { height: 29px; }
+  .header-actions { gap: 6px; margin-left: 0; }
+  .header-actions .btn.small { padding: 6px 10px; font-size: 12.5px; }
+  .theme-switch { width: 44px; height: 24px; }
+  .theme-switch .knob { width: 18px; height: 18px; }
+  .theme-switch .knob svg { width: 11px; height: 11px; }
+  [data-theme="light"] .theme-switch .knob { transform: translateX(20px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -458,12 +467,21 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 .card .icon.has-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; display: block; }
 
 /* ---------- theme toggle ---------- */
-.theme-btn {
-  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; cursor: pointer;
-  border: 1px solid var(--border-soft); background: rgba(255, 255, 255, 0.03); color: var(--text);
-  font-size: 16px; line-height: 1; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; flex: none;
+/* Wildcut-style sliding theme switch: line sun (dark) / moon (light), brand turquoise */
+.theme-switch {
+  position: relative; width: 50px; height: 27px; border-radius: 999px; flex: none; padding: 0; cursor: pointer;
+  border: 1px solid var(--border); background: rgba(45, 212, 191, 0.12); transition: border-color 0.2s, background 0.25s;
 }
-.theme-btn:hover { transform: translateY(-2px); border-color: var(--border); box-shadow: 0 8px 18px rgba(45, 212, 191, 0.15); }
+.theme-switch:hover { border-color: var(--acc); }
+.theme-switch .knob {
+  position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; border-radius: 50%;
+  background: #ffffff; display: grid; place-items: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+.theme-switch .knob svg { width: 13px; height: 13px; stroke: #0d9488; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+[data-theme="light"] .theme-switch .knob { transform: translateX(23px); }
+.logo span { white-space: nowrap; }
+.header-actions .btn { white-space: nowrap; }
 
 /* ---------- light (day) theme ---------- */
 :root { color-scheme: dark; }
@@ -477,6 +495,5 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 [data-theme="light"] .site-header { background: rgba(255, 255, 255, 0.85); }
 [data-theme="light"] .photo-card .tag { background: #ffffff; }
 [data-theme="light"] .toast { background: #ffffff; color: var(--text); }
-[data-theme="light"] .theme-btn { background: rgba(9, 45, 45, 0.04); }
 [data-theme="light"] .social-row a { background: rgba(9, 45, 45, 0.03); }
 [data-theme="light"] .card { box-shadow: 0 14px 34px rgba(9, 45, 45, 0.08); }

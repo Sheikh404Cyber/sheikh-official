@@ -10,7 +10,7 @@
 <meta property="og:image" content="/media/profile.jpg">
 <link rel="icon" type="image/png" href="/favicon.png">
 <script>try{if(localStorage.getItem('so_theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=4">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
       <a href="/#about">About</a>
       <a href="/#contact">Contact</a>
     </nav>
-    <button class="theme-btn" type="button" data-theme-btn aria-label="Switch to day mode">☀️</button>
+    <button class="theme-switch" type="button" data-theme-btn role="switch" aria-checked="false" aria-label="Switch to day mode"><span class="knob"></span></button>
       <div class="header-actions">
       <a class="btn primary small" href="/signup">Sign Up</a>
     </div>
@@ -50,7 +50,7 @@
 </main>
 
 <div class="toast-zone" id="toastZone"></div>
-<script src="/assets/js/auth.js"></script>
-<script src="/assets/js/theme.js" defer></script>
+<script src="/assets/js/auth.js?v=4"></script>
+<script src="/assets/js/theme.js?v=4" defer></script>
 </body>
 </html>

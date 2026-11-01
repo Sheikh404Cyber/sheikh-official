@@ -7,7 +7,7 @@ export async function onRequestGet({ env }) {
     const result = await env.DB.prepare(
       'SELECT id, name, description, url, image_url, sort_order, created_at FROM demos WHERE published = 1 ORDER BY sort_order ASC, id ASC'
     ).all();
-    return json({ ok: true, demos: result.results || [] });
+    return json({ ok: true, demos: result.results || [] }, 200, { 'Cache-Control': 'no-store' });
   } catch {
     return fail(500, 'Server error');
   }
