@@ -84,7 +84,7 @@ img { max-width: 100%; }
   transition: color 0.2s, background 0.2s;
 }
 .main-nav a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
-.header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.header-actions { display: flex; align-items: center; gap: 12px; margin-left: 6px; }
 .user-chip { font-size: 14px; font-weight: 600; color: var(--text); padding: 0 4px; white-space: nowrap; }
 
 .btn {
@@ -433,6 +433,8 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   .hero-photos .hp.side img { width: 88px; height: 100px; }
   .hero-photos .hp.main img { width: 108px; height: 122px; }
   .main-nav { display: none; }
+  .theme-switch { margin-left: auto; }
+  .header-actions { margin-left: 0; }
   .about-grid { grid-template-columns: 1fr; }
   .about-grid .photo { max-width: 300px; }
   .stats .wrap { grid-template-columns: repeat(2, 1fr); }
