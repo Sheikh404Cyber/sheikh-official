@@ -379,3 +379,5 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   .reveal { opacity: 1; transform: none; }
   .hero h1 .hl { opacity: 1; transform: none; }
 }
+
+.logo-img { height: 38px; width: auto; display: block; filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.35)); }
