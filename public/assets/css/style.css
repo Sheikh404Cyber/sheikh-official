@@ -355,8 +355,11 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
-  .hero .wrap { grid-template-columns: 1fr; gap: 56px; }
+  .hero .wrap { grid-template-columns: 1fr; gap: 34px; }
   .hero-photo { order: -1; }
+  .photo-card { width: min(228px, 58vw); padding: 7px; border-radius: 20px; }
+  .photo-card img { aspect-ratio: 1 / 1.08; border-radius: 15px; }
+  .photo-card .tag { font-size: 11.5px; padding: 6px 12px; bottom: -13px; }
   .main-nav { display: none; }
   .about-grid { grid-template-columns: 1fr; }
   .about-grid .photo { max-width: 300px; }
