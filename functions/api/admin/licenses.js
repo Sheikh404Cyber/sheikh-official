@@ -70,7 +70,7 @@ export async function onRequestPost({ request, env }) {
 
     const iat = dhakaToday();
     const exp = addDays(iat, days - 1); // aj shoho mot `days` din
-    const payload = { v: 1, name, machine, days, exp, iat };
+    const payload = { v: 1, name, machine, days, exp, iat, ...(body?.trial ? { trial: true } : {}) };
     const bodyB64 = b64url(new TextEncoder().encode(JSON.stringify(payload)));
     const key = await crypto.subtle.importKey('pkcs8', b64ToBytes(env.LICENSE_PRIVATE_KEY),
       { name: 'Ed25519' }, false, ['sign']);

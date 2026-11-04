@@ -709,11 +709,12 @@ $('#licDays')?.addEventListener('change', () => {
 });
 $('#licForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const days = $('#licDays').value === 'custom' ? +$('#licCustomDays').value : +$('#licDays').value;
+  const isTrial = $('#licDays').value === 'trial3';
+  const days = isTrial ? 3 : ($('#licDays').value === 'custom' ? +$('#licCustomDays').value : +$('#licDays').value);
   try {
     const data = await api('/api/admin/licenses', {
       method: 'POST',
-      body: JSON.stringify({ customer_name: $('#licName').value.trim(), machine: $('#licMachine').value.trim().toUpperCase(), days }),
+      body: JSON.stringify({ customer_name: $('#licName').value.trim(), machine: $('#licMachine').value.trim().toUpperCase(), days, trial: isTrial }),
     });
     $('#licResult').classList.remove('hidden');
     $('#licKeyOut').value = data.key;
