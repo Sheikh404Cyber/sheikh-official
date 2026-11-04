@@ -785,3 +785,8 @@ body:hover #cursorRing { opacity: .6; }
 .ed-tri { width: min(920px, 94vw); margin: 10px auto -6px; }
 @keyframes edCutIn { from { opacity: 0; transform: translateY(46px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 900px) { .ed-tri { width: 96vw; margin-top: 2px; } }
+
+/* ===== v12 — stage scales with window HEIGHT too: band and portrait stay
+   level (soman) on short windows instead of overflowing and slicing. ===== */
+.ed-giant { font-size: min(19.5vw, 34vh); }
+.ed-tri { width: min(920px, 94vw, 118vh); }
