@@ -168,7 +168,7 @@ function toolCard(tool, idx) {
        <div class="demo-box hidden"></div>`
     : '';
   return `
-  <article class="card reveal" style="--rd:${(idx % 3) * 0.08}s">
+  <article class="card reveal" style="--rd:${(idx % 3) * 0.14}s">
     ${tool.logo ? '<div class="icon has-logo"><img src="' + esc(tool.logo) + '" alt="" loading="lazy"></div>' : '<div class="icon">🛠️</div>'}
     <h3>${esc(tool.name)}</h3>
     ${tool.tagline ? `<div class="tagline">${esc(tool.tagline)}</div>` : ''}
@@ -222,7 +222,7 @@ async function loadTools() {
 /* ---------- tutorials ---------- */
 function videoCard(video, idx) {
   return `
-  <article class="card video-card reveal" style="--rd:${(idx % 3) * 0.08}s">
+  <article class="card video-card reveal" style="--rd:${(idx % 3) * 0.14}s">
     <button class="video-thumb" type="button" data-yt="${esc(video.youtube_id)}" aria-label="Play video: ${esc(video.title)}">
       <img src="https://i.ytimg.com/vi/${esc(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy">
       <span class="play"><span>▶</span></span>
@@ -265,7 +265,7 @@ function demoCard(demo, idx) {
     ? `<div class="shot"><img src="${esc(demo.image_url)}" alt="${esc(demo.name)}" loading="lazy"></div>`
     : `<div class="shot">${esc(demo.name.split(' ').map((w) => w[0]).join('').slice(0, 3).toUpperCase())}</div>`;
   return `
-  <article class="card demo-card reveal" style="--rd:${(idx % 3) * 0.08}s">
+  <article class="card demo-card reveal" style="--rd:${(idx % 3) * 0.14}s">
     ${shot}
     <h3>${esc(demo.name)}</h3>
     ${demo.description ? `<p>${esc(demo.description)}</p>` : '<p></p>'}
@@ -307,7 +307,7 @@ async function loadTestimonials() {
     grid.innerHTML = items
       .map(
         (t, i) => `
-      <article class="card testi-card reveal" style="--rd:${(i % 3) * 0.08}s">
+      <article class="card testi-card reveal" style="--rd:${(i % 3) * 0.14}s">
         <div class="quote">”</div>
         <p>${esc(t.text)}</p>
         <div class="who"><div class="nm">${esc(t.name)}</div>${t.meta ? `<div class="mt">${esc(t.meta)}</div>` : ''}</div>

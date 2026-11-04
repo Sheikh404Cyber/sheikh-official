@@ -577,3 +577,39 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 .ed-copy { min-width: 0; }
 .ed-copy .location { justify-content: flex-start; }
 .ed-copy h1 .hl { font-family: 'Anton', sans-serif; }
+
+/* ===== entrance choreography — pieces build in one by one ===== */
+@keyframes edGiantIn { from { opacity: 0; transform: translateX(-50%) scale(1.07); } to { opacity: .16; transform: translateX(-50%) scale(1); } }
+.ed-giant { animation: edGiantIn 1.3s cubic-bezier(.2,.8,.25,1) .15s both; }
+[data-theme="light"] .ed-giant { animation-name: edGiantInLight; }
+@keyframes edGiantInLight { from { opacity: 0; transform: translateX(-50%) scale(1.07); } to { opacity: .09; transform: translateX(-50%) scale(1); } }
+@keyframes edFadeDown { from { opacity: 0; transform: rotate(-3deg) translateY(-16px); } to { opacity: 1; transform: rotate(-3deg) translateY(0); } }
+.ed-script { animation: edFadeDown .7s cubic-bezier(.2,.8,.25,1) .35s both; }
+@keyframes edFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.ed-copy .subtitle { animation: edFadeUp .7s cubic-bezier(.2,.8,.25,1) .95s both; }
+.ed-copy .location { animation: edFadeUp .7s cubic-bezier(.2,.8,.25,1) 1.1s both; }
+.ed-copy .lead { animation: edFadeUp .7s cubic-bezier(.2,.8,.25,1) 1.25s both; }
+.ed-copy .hero-ctas { animation: edFadeUp .7s cubic-bezier(.2,.8,.25,1) 1.45s both; }
+.ed-copy .social-row { animation: edFadeUp .7s cubic-bezier(.2,.8,.25,1) 1.65s both; }
+@keyframes edCutIn { from { opacity: 0; transform: translateY(52px) scale(.955); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.ed-cutout img { animation: edCutIn 1.05s cubic-bezier(.2,.8,.25,1) .55s both; }
+@keyframes edStatIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.ed-stat:nth-child(1) { animation: edStatIn .7s cubic-bezier(.2,.8,.25,1) 1s both; }
+.ed-stat:nth-child(2) { animation: edStatIn .7s cubic-bezier(.2,.8,.25,1) 1.2s both; }
+@keyframes edSignIn { from { opacity: 0; transform: rotate(-3deg) translateY(10px); } to { opacity: 1; transform: rotate(-3deg) translateY(0); } }
+.ed-sign { animation: edSignIn .7s cubic-bezier(.2,.8,.25,1) 1.5s both; }
+
+/* scroll build-up: cards and steps rise + settle, staggered */
+.grid > article.reveal { transform: translateY(46px) scale(.965); }
+.grid > article.reveal.in { transform: translateY(0) scale(1); }
+.ed-step.reveal { transform: translateY(42px) scale(.96); transition-delay: 0s; }
+.ed-step.reveal.in { transform: translateY(0) scale(1); }
+.ed-step:nth-child(2).reveal { transition-delay: .12s; }
+.ed-step:nth-child(3).reveal { transition-delay: .24s; }
+.ed-step:nth-child(4).reveal { transition-delay: .36s; }
+.ed-step:nth-child(5).reveal { transition-delay: .48s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ed-giant, .ed-script, .ed-copy .subtitle, .ed-copy .location, .ed-copy .lead,
+  .ed-copy .hero-ctas, .ed-copy .social-row, .ed-cutout img, .ed-stat, .ed-sign { animation: none; }
+}
