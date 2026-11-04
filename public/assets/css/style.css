@@ -766,3 +766,10 @@ html.lenis, html.lenis body { height: auto; }
 body:hover #cursorRing { opacity: .6; }
 #cursorRing.on { opacity: .95; }
 @media (pointer: coarse) { #cursorRing { display: none; } }
+
+/* ===== v8 — hero bottom melt: smooth multi-stop fade + stage scrim + grounding shadow ===== */
+.ed-tri img { -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.88) 80%, rgba(0,0,0,.6) 89%, rgba(0,0,0,.28) 96%, transparent 100%); mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.88) 80%, rgba(0,0,0,.6) 89%, rgba(0,0,0,.28) 96%, transparent 100%); }
+.ed-tri::after { content: ''; position: absolute; left: 9%; right: 9%; bottom: 4px; height: 56px; background: radial-gradient(ellipse at center, rgba(0,0,0,.55), transparent 65%); filter: blur(12px); z-index: 0; }
+.ed-tri img { position: relative; z-index: 1; }
+.ed-hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 210px; background: linear-gradient(to bottom, transparent, var(--bg) 88%); z-index: 2; pointer-events: none; }
+@media (max-width: 900px) { .ed-hero::after { height: 150px; } }
