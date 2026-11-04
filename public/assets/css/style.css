@@ -773,3 +773,10 @@ body:hover #cursorRing { opacity: .6; }
 .ed-tri img { position: relative; z-index: 1; }
 .ed-hero::after { content: ''; position: absolute; top: auto; left: 0; right: 0; bottom: 0; height: 210px; background: linear-gradient(to bottom, transparent, var(--bg) 88%); z-index: 2; pointer-events: none; }
 @media (max-width: 900px) { .ed-hero::after { height: 150px; } }
+
+/* ===== v10 — the stage melt owns the ending: figures no longer fade by alpha
+   (that let the red band show through as blocks); one bg-coloured melt now
+   dissolves figures + band together at the hero bottom. ===== */
+.ed-tri img { -webkit-mask-image: linear-gradient(to bottom, #000 96%, transparent 100%); mask-image: linear-gradient(to bottom, #000 96%, transparent 100%); }
+.ed-hero::after { height: 280px; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 55%, transparent) 45%, color-mix(in srgb, var(--bg) 88%, transparent) 72%, var(--bg) 92%); }
+@media (max-width: 900px) { .ed-hero::after { height: 200px; } }
