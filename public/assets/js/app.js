@@ -409,3 +409,21 @@ loadVideos();
 loadDemos();
 loadTestimonials();
 loadFaqs();
+
+/* ---------- editorial cursor trail (fine pointers only) ---------- */
+(() => {
+  if (!window.matchMedia || !matchMedia('(pointer:fine)').matches) return;
+  let last = 0;
+  addEventListener('pointermove', (e) => {
+    const now = performance.now();
+    if (now - last < 34) return;
+    last = now;
+    const d = document.createElement('span');
+    d.className = 'trail-dot';
+    d.style.left = e.clientX + 'px';
+    d.style.top = e.clientY + 'px';
+    d.style.transform = `rotate(${Math.random() * 90 - 45}deg)`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 720);
+  }, { passive: true });
+})();
