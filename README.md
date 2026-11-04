@@ -1,5 +1,13 @@
 # Sheikh-OFFICIAL — Amin Sheikh's personal platform
 
+**Editorial redesign (2026-11-05):** the homepage was rebuilt to a dark
+editorial design system reverse-engineered from a reference portfolio
+(assembly-on-scroll motion grammar, Anton/Caveat display type, numbered
+sections, giant accent word band, triptych hero portrait, red accent
+`#e10600`). Motion runs on a CSS reveal layer plus a self-hosted
+GSAP/ScrollTrigger/SplitText/Lenis layer. See `REFERENCE_ANALYSIS.md`,
+`DESIGN_SYSTEM.md`, `ANIMATION_GUIDE.md`, `TECH_STACK.md`, `QA_REPORT.md`.
+
 Public showcase (tools, tutorial videos, website demos) + member accounts
 with admin-granted download permission + a full admin panel (users, tools,
 videos, websites, settings). Built like The Wildcut: **Cloudflare Pages +
