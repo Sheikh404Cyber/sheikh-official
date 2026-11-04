@@ -332,8 +332,8 @@ async function loadFaqs() {
     if (!items.length) return; // section stays hidden
     list.innerHTML = items
       .map(
-        (f) => `
-      <div class="faq-item reveal">
+        (f, i) => `
+      <div class="faq-item reveal" style="--rd:${(i * 0.09).toFixed(2)}s">
         <button class="faq-q" type="button" aria-expanded="false"><span>${esc(f.q)}</span><span class="chev">▾</span></button>
         <div class="faq-a"><p>${esc(f.a)}</p></div>
       </div>`
