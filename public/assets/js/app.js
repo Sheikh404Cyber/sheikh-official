@@ -427,3 +427,12 @@ loadFaqs();
     setTimeout(() => d.remove(), 720);
   }, { passive: true });
 })();
+
+/* ---------- giant hero word: letters fly in from both sides ---------- */
+(() => {
+  const g = document.querySelector('.ed-giant');
+  if (!g) return;
+  const word = g.textContent.trim();
+  g.setAttribute('aria-hidden', 'true');
+  g.innerHTML = [...word].map((ch, i) => `<span class="gl2" style="--d:${(i * 0.07).toFixed(2)}s">${ch}</span>`).join('');
+})();

@@ -710,3 +710,34 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   .ed-giant-foot .gl > span { transform: none; transition: none; }
   .faq-item.reveal, .contact-btn.reveal, .ed-step.reveal { transform: none; }
 }
+
+/* ===== v5 — bold match: solid giant band, bigger portrait, long-travel springy motion ===== */
+.ed-giant { animation: none; opacity: 1; bottom: auto; top: 33%; font-size: clamp(130px, 19.5vw, 300px); color: var(--acc); z-index: 0; }
+[data-theme="light"] .ed-giant { opacity: .8; }
+.ed-giant .gl2 { display: inline-block; opacity: 0; transform: translateX(var(--sx, 70px)) scale(1.06); animation: edGiantLetter .85s cubic-bezier(.22, 1.2, .36, 1) forwards; animation-delay: calc(.8s + var(--d, 0s)); }
+.ed-giant .gl2:nth-child(odd) { --sx: -80px; }
+.ed-giant .gl2:nth-child(even) { --sx: 80px; }
+@keyframes edGiantLetter { to { opacity: 1; transform: translateX(0) scale(1); } }
+.ed-hero-grid { grid-template-columns: 1fr .95fr .34fr; }
+.ed-cutout img { max-height: 665px; }
+@keyframes edCutIn { from { opacity: 0; transform: translateY(92px) scale(.93); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes edFadeUp { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes edStatIn { from { opacity: 0; transform: translateX(56px); } to { opacity: 1; transform: translateX(0); } }
+
+/* every reveal travels farther, lands with a spring */
+.reveal { transition-duration: .95s; transition-timing-function: cubic-bezier(.22, 1.12, .36, 1); }
+.grid > article.reveal { transform: translateY(70px) scale(.94); }
+.faq-item.reveal { transform: translateX(-60px); }
+.contact-btn.reveal { transform: translateX(-54px); }
+.ed-step.reveal { transform: translateX(-54px); }
+.section-head > h2 { transform: translateY(52px); }
+.video-card .video-thumb, .demo-card .shot { transition-duration: 1.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ed-giant .gl2 { animation: none; opacity: 1; transform: none; }
+}
+
+/* v5 fix: copy stays readable over the solid band (role line white like the reference) */
+.ed-giant { top: 36%; }
+.ed-copy .subtitle { color: var(--text); text-shadow: 0 1px 14px rgba(3, 8, 10, .85); }
+.ed-copy .lead, .ed-copy .location { text-shadow: 0 1px 14px rgba(3, 8, 10, .88), 0 0 3px rgba(3, 8, 10, .8); }
