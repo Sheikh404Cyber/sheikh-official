@@ -668,9 +668,59 @@ $('#pwForm').addEventListener('submit', async (e) => {
     syncToolKind();
     await Promise.all([
       loadDashboard(), loadUsers(), toolsMgr.load(), videosMgr.load(), demosMgr.load(),
-      loadSettings(), testiMgr.load(), faqMgr.load(), loadOrders(),
+      loadSettings(), testiMgr.load(), faqMgr.load(), loadOrders(), loadLicenses(),
     ]);
   } catch {
     location.href = '/login';
   }
 })();
+
+/* ---------- license keys (QuickVid) ---------- */
+async function loadLicenses() {
+  const box = $('#licList');
+  if (!box) return;
+  try {
+    const data = await api('/api/admin/licenses');
+    const rows = data.licenses || [];
+    if (!rows.length) { box.innerHTML = '<p class="empty-line">No keys issued yet.</p>'; return; }
+    box.innerHTML = `<table class="admin-table"><thead><tr><th>Buyer</th><th>Machine</th><th>Days</th><th>Expires</th><th>Status</th><th></th></tr></thead><tbody>${
+      rows.map((r) => `<tr>
+        <td>${esc(r.customer_name)}</td><td style="font-family:monospace">${esc(r.machine)}</td>
+        <td>${r.days}</td><td>${esc(r.exp)}</td>
+        <td>${r.days_left >= 0 ? `<span class="pill">${r.days_left} days left</span>` : '<span class="pill gold">Expired</span>'}</td>
+        <td style="white-space:nowrap"><button class="btn small" type="button" data-lic-copy="${r.id}">Copy key</button> <button class="btn small" type="button" data-lic-del="${r.id}">Delete</button></td>
+      </tr>`).join('')
+    }</tbody></table>`;
+    box.querySelectorAll('[data-lic-copy]').forEach((b) => b.addEventListener('click', () => {
+      const r = rows.find((x) => x.id === +b.dataset.licCopy);
+      if (r) navigator.clipboard.writeText(r.lic_key).then(() => toast('Key copied'));
+    }));
+    box.querySelectorAll('[data-lic-del]').forEach((b) => b.addEventListener('click', async () => {
+      if (!confirm('Delete this key record? (A key the buyer already activated keeps working until its days end — deleting here only removes the record.)')) return;
+      try { await api('/api/admin/licenses', { method: 'POST', body: JSON.stringify({ delete_id: +b.dataset.licDel }) }); toast('Record deleted'); loadLicenses(); }
+      catch (err) { toast(err.message, true); }
+    }));
+  } catch (err) {
+    box.innerHTML = `<p class="empty-line">${esc(err.message)}</p>`;
+  }
+}
+$('#licDays')?.addEventListener('change', () => {
+  $('#licCustomWrap').classList.toggle('hidden', $('#licDays').value !== 'custom');
+});
+$('#licForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const days = $('#licDays').value === 'custom' ? +$('#licCustomDays').value : +$('#licDays').value;
+  try {
+    const data = await api('/api/admin/licenses', {
+      method: 'POST',
+      body: JSON.stringify({ customer_name: $('#licName').value.trim(), machine: $('#licMachine').value.trim().toUpperCase(), days }),
+    });
+    $('#licResult').classList.remove('hidden');
+    $('#licKeyOut').value = data.key;
+    toast('Key generated — expires ' + data.exp);
+    loadLicenses();
+  } catch (err) { toast(err.message, true); }
+});
+$('#licCopyBtn')?.addEventListener('click', () => {
+  navigator.clipboard.writeText($('#licKeyOut').value).then(() => toast('Key copied — now send it to the buyer'));
+});

@@ -145,3 +145,15 @@ CREATE INDEX IF NOT EXISTS idx_user_tools_tool   ON user_tools(tool_id);
 CREATE INDEX IF NOT EXISTS idx_testimonials_vis  ON testimonials(visible, sort);
 CREATE INDEX IF NOT EXISTS idx_faqs_vis          ON faqs(visible, sort);
 CREATE INDEX IF NOT EXISTS idx_orders_seen       ON orders(seen, id);
+
+CREATE TABLE IF NOT EXISTS licenses (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER REFERENCES users(id),
+  customer_name TEXT NOT NULL,
+  machine TEXT NOT NULL,
+  days INTEGER NOT NULL,
+  exp TEXT NOT NULL,
+  lic_key TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_licenses_created ON licenses(id);

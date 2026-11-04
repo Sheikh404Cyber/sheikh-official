@@ -157,9 +157,12 @@ function toolCard(tool, idx) {
   const badge = owned
     ? '<span class="open-badge">✓ You own this</span>'
     : '<span class="lock-badge">🔒 Locked</span>';
+  const notForSale = !owned && (tool.price || '').trim().toLowerCase() === 'owner only';
   const button = owned
     ? `<a class="btn primary small" href="/api/tools/${tool.id}/download">⬇ Download</a>`
-    : `<a class="btn whatsapp small" href="${buyLink(tool)}" target="_blank" rel="noopener">🛒 Buy on WhatsApp</a>`;
+    : notForSale
+      ? '<span class="btn ghost small" aria-disabled="true">🔒 Owner only</span>'
+      : `<a class="btn whatsapp small" href="${buyLink(tool)}" target="_blank" rel="noopener">🛒 Buy on WhatsApp</a>`;
   const demo = tool.demo_youtube
     ? `<button class="btn ghost small demo-toggle" type="button" data-demo="${esc(tool.demo_youtube)}" aria-expanded="false">▶ Watch demo</button>
        <div class="demo-box hidden"></div>`
