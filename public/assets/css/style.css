@@ -741,3 +741,18 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 .ed-giant { top: 36%; }
 .ed-copy .subtitle { color: var(--text); text-shadow: 0 1px 14px rgba(3, 8, 10, .85); }
 .ed-copy .lead, .ed-copy .location { text-shadow: 0 1px 14px rgba(3, 8, 10, .88), 0 0 3px rgba(3, 8, 10, .8); }
+
+/* ===== v6 — triptych hero portrait (user-supplied 2:1 cutout) ===== */
+.ed-hero-grid { grid-template-columns: 1.08fr .32fr; z-index: 2; }
+.ed-tri { position: relative; z-index: 1; width: min(1060px, 94vw); margin: -40px auto -6px; pointer-events: none; }
+.ed-tri img { display: block; width: 100%; height: auto; opacity: 0; animation: edCutIn 1s cubic-bezier(.2,.8,.25,1) 1.1s both; -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent 99.5%); mask-image: linear-gradient(to bottom, #000 90%, transparent 99.5%); }
+.ed-giant { top: auto; bottom: 13%; }
+.scroll-cue { display: none; }
+@media (max-width: 900px) {
+  .ed-hero-grid { grid-template-columns: 1fr; }
+  .ed-tri { width: 97vw; margin-top: -14px; }
+  .ed-giant { bottom: 9%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-tri img { animation: none; opacity: 1; }
+}
