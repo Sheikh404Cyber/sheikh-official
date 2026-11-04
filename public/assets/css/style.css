@@ -790,3 +790,30 @@ body:hover #cursorRing { opacity: .6; }
    level (soman) on short windows instead of overflowing and slicing. ===== */
 .ed-giant { font-size: min(19.5vw, 34vh); }
 .ed-tri { width: min(920px, 94vw, 118vh); }
+
+/* ===== v13 — band lives WITH the portrait (inside .ed-tri): one stage unit,
+   level on every screen; sized to always peek past the figures. ===== */
+.ed-tri { position: relative; }
+.ed-giant { top: 46%; bottom: auto; left: 50%; margin-left: -50vw; width: 100vw; }
+.ed-tri img { position: relative; z-index: 1; }
+.ed-tri::after { z-index: 2; }
+@media (max-width: 900px) { .ed-giant { font-size: min(44vw, 52vh); } }
+
+/* ===== v14 — band centred on the figures by its own em box (top edge was
+   sitting at 46%, pushing the letters below the portrait into the melt). ===== */
+.ed-giant { line-height: 1; top: calc(48% - .5em); }
+@media (max-width: 900px) { .ed-giant { font-size: min(40vw, 50vh); } }
+
+/* ===== v15 — kill the v1 translateX(-50%) still hiding in the base giant rule:
+   it double-centred the band (element centre sat on the viewport's left edge). ===== */
+.ed-giant { transform: none; }
+
+/* ===== v16 — band sized from the portrait itself (container units): the word
+   is always ~1.25x the figures' width and never taller than the portrait,
+   so it peeks on both sides and can never slice below. Centred text too. ===== */
+.ed-tri { container-type: inline-size; }
+.ed-giant { text-align: center; font-size: min(47cqw, 21vw); }
+
+/* ===== v17 — the 21vw cap is desktop-only; on phones it strangled the band. ===== */
+.ed-giant { font-size: 47cqw; }
+@media (min-width: 901px) { .ed-giant { font-size: min(47cqw, 21vw); } }
