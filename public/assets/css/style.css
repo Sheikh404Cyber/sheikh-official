@@ -1037,3 +1037,26 @@ body:hover #cursorRing { opacity: .6; }
   #toolsGrid .card h3 { font-size: 14px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   #toolsGrid .foot .btn { font-size: 11.5px; padding: 8px 10px; }
 }
+
+/* ===== v41 — tools REVERTED to the original card style on phone (his order:
+   full card — icon, name, tagline, description, chips, price, buttons). ===== */
+@media (max-width: 900px) {
+  #toolsGrid { grid-template-columns: 1fr; gap: 22px; }
+  #toolsGrid .card { display: flex; flex-direction: column; align-items: stretch; padding: 26px; gap: 10px; border-radius: var(--radius); }
+  #toolsGrid .card .icon { width: 48px; height: 48px; border-radius: 13px; font-size: 23px; }
+  #toolsGrid .card h3 { font-size: 19px; display: block; white-space: normal; overflow: visible; }
+  #toolsGrid .tagline { display: block; font-size: 14px; margin-top: -6px; }
+  #toolsGrid .card p { display: block; font-size: 14.5px; line-height: 1.6; overflow: visible; -webkit-line-clamp: unset; }
+  #toolsGrid .chips { display: flex; gap: 8px; }
+  #toolsGrid .chip { font-size: 12px; padding: 4px 10px; }
+  #toolsGrid .demo-toggle { display: inline-flex; }
+  #toolsGrid .demo-box { display: block; }
+  #toolsGrid .demo-box.hidden { display: none; }
+  #toolsGrid .price-row { margin-top: 14px; flex-wrap: wrap; }
+  #toolsGrid .price-amount { font-size: 27px; }
+  #toolsGrid .price-note { font-size: 12px; }
+  #toolsGrid .price-period, #toolsGrid .price-compare { display: inline; }
+  #toolsGrid .lock-badge, #toolsGrid .open-badge { display: inline-flex; }
+  #toolsGrid .foot { margin-top: 6px; flex-wrap: nowrap; }
+  #toolsGrid .foot .btn { padding: 7px 13px; font-size: 13px; white-space: normal; }
+}
