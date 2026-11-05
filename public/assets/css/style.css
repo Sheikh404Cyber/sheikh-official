@@ -917,3 +917,89 @@ body:hover #cursorRing { opacity: .6; }
 }
 [data-theme="light"] .site-header { background: rgba(238, 235, 228, .88); }
 [data-theme="light"] .hero::before { opacity: .45; }
+
+/* ===== v30 — phone: hero buttons, socials and stats sit in the MIDDLE of
+   the display (his order), not pushed to one side. Desktop untouched. ===== */
+@media (max-width: 900px) {
+  .ed-copy .hero-ctas, .ed-copy .social-row { justify-content: center; }
+  .ed-stats { justify-content: center; }
+  .ed-stat { text-align: center; }
+}
+
+/* ===== v31 — phone: every card section compact (tools 2-up tiles, how-to
+   steps tightened, process stays 2-up instead of giant full-width rows). ===== */
+@media (max-width: 900px) {
+  #toolsGrid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  #toolsGrid .card { padding: 15px 13px; gap: 7px; border-radius: 16px; }
+  #toolsGrid .card .icon { width: 42px; height: 42px; border-radius: 11px; font-size: 19px; }
+  #toolsGrid .card h3 { font-size: 16px; }
+  #toolsGrid .tagline { font-size: 12.5px; margin-top: -3px; }
+  #toolsGrid .card p { font-size: 12.5px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  #toolsGrid .chips { gap: 5px; }
+  #toolsGrid .chip { font-size: 10.5px; padding: 3px 7px; }
+  #toolsGrid .price-amount { font-size: 21px; }
+  #toolsGrid .foot .btn { padding: 8px 10px; font-size: 12.5px; }
+  .steps { gap: 14px; }
+  .step { padding: 18px; border-radius: 16px; }
+  .step h3 { font-size: 17px; }
+  .step p { font-size: 13.5px; }
+  .ed-steps { gap: 12px; }
+  .ed-step { padding: 16px 14px; border-radius: 14px; }
+  .ed-step b { font-size: 27px; }
+  .ed-step h3 { font-size: 15px; margin: 8px 0 6px; }
+  .ed-step p { font-size: 12.5px; }
+}
+@media (max-width: 560px) {
+  .ed-steps { grid-template-columns: 1fr 1fr; }
+  .ed-step:last-child { grid-column: 1 / -1; }
+}
+
+/* ===== v32 — serial numbers removed from every section (his order):
+   card ghost numbers, how-to circles, process numbers — all gone. ===== */
+.grid > article.card::after { display: none; }
+.step .n { display: none; }
+.ed-step b { display: none; }
+.ed-step h3 { margin-top: 0; }
+
+/* ===== v33 — contact: ONE line of 6 on every screen (PC + phone, his order).
+   Phone tiles go icon-over-name with the handle tucked away. ===== */
+.contact-grid { grid-template-columns: repeat(6, 1fr); }
+.contact-btn { min-width: 0; }
+.contact-btn > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.contact-btn small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 900px) {
+  .contact-grid { gap: 8px; }
+  .contact-btn { flex-direction: column; align-items: center; text-align: center; padding: 12px 4px 10px; gap: 7px; border-radius: 14px; font-size: 11px; }
+  .contact-btn .ci { width: 36px; height: 36px; border-radius: 10px; }
+  .contact-btn svg { width: 20px; height: 20px; }
+  .contact-btn small { display: none; }
+}
+
+/* ===== v34 — phone tiles tamed: tools grid can't overflow (minmax 0 +
+   wrapping foot), contact labels fit their tile. ===== */
+@media (max-width: 900px) {
+  #toolsGrid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #toolsGrid .card { min-width: 0; }
+  #toolsGrid .foot { flex-wrap: wrap; }
+  .contact-btn > span:last-child { width: 100%; text-align: center; font-size: 10.5px; letter-spacing: 0; }
+}
+
+/* ===== v35 — contact tile labels: full names fit (tighter gap/padding, 9.5px). ===== */
+@media (max-width: 900px) {
+  .contact-grid { gap: 6px; }
+  .contact-btn { padding: 12px 2px 10px; }
+  .contact-btn > span:last-child { font-size: 9.5px; }
+}
+
+/* ===== v36 — phone contact tiles: icon-only (names ellipsised at 6-across;
+   the icons say it all). Names/handles stay on PC's one line. ===== */
+@media (max-width: 900px) {
+  .contact-btn > span:last-child { display: none; }
+  .contact-btn { justify-content: center; padding: 13px 2px; }
+  .contact-btn .ci { width: 40px; height: 40px; }
+  .contact-btn svg { width: 22px; height: 22px; }
+}
+
+/* ===== v37 — desktop contact one-liners: slightly tighter so full names fit. ===== */
+.contact-btn { padding: 15px 14px; gap: 10px; font-size: 13.5px; }
+.contact-btn small { font-size: 11.5px; }
