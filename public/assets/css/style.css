@@ -891,3 +891,15 @@ body:hover #cursorRing { opacity: .6; }
     radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
 }
 .ed-hero::after { height: 200px; }
+
+/* ===== v27 PREVIEW (not deployed on his order — show first): the 3 lines
+   sit at the image's very end — bottom line on the black edge, the other
+   two a hair (3px) above each other. ===== */
+.ed-tri::before {
+  background:
+    linear-gradient(to right, transparent, rgba(230,6,0,.45) 32%, rgba(255,110,80,.65) 50%, rgba(230,6,0,.45) 68%, transparent) center calc(100% - 18px) / 90% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.6) 30%, rgba(255,110,80,.85) 50%, rgba(230,6,0,.6) 70%, transparent) center calc(100% - 15px) / 95% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.8) 28%, rgba(255,120,85,1) 50%, rgba(230,6,0,.8) 72%, transparent) center calc(100% - 12px) / 100% 2px no-repeat,
+    radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+}
