@@ -817,3 +817,12 @@ body:hover #cursorRing { opacity: .6; }
 /* ===== v17 — the 21vw cap is desktop-only; on phones it strangled the band. ===== */
 .ed-giant { font-size: 47cqw; }
 @media (min-width: 901px) { .ed-giant { font-size: min(47cqw, 21vw); } }
+
+/* ===== v18 — LOCKED stage: photo + SHEIKH are one piece. Same floor
+   (band bottom = portrait bottom, no gap), one single rise animation
+   on the wrapper, children no longer animate separately. ===== */
+.ed-tri { animation: edCutIn .95s cubic-bezier(.2,.8,.25,1) .55s both; }
+.ed-tri img { animation: none; opacity: 1; }
+.ed-giant { animation: none; opacity: 1; top: auto; bottom: -.12em; font-size: 52cqw; }
+.ed-giant .gl2 { animation: none; opacity: 1; transform: none; }
+@media (min-width: 901px) { .ed-giant { font-size: min(52cqw, 23vw); } }

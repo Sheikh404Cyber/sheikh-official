@@ -40,11 +40,9 @@
     });
   }
 
-  /* ---- Hero parallax while scrolling out ---- */
-  gsap.to('.ed-giant', {
-    yPercent: 34, ease: 'none',
-    scrollTrigger: { trigger: '.ed-hero', start: 'top top', end: 'bottom top', scrub: true },
-  });
+  /* ---- Hero parallax while scrolling out ----
+     The SHEIKH band now lives INSIDE .ed-tri (locked stage): it rides the
+     portrait's parallax. No separate tween — they must never separate. */
   gsap.to('.ed-tri', {
     y: -30, ease: 'none',
     scrollTrigger: { trigger: '.ed-hero', start: 'top top', end: 'bottom top', scrub: true },
