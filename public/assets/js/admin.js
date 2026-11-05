@@ -685,7 +685,7 @@ async function loadLicenses() {
     if (!rows.length) { box.innerHTML = '<p class="empty-line">No keys issued yet.</p>'; return; }
     box.innerHTML = `<table class="admin-table"><thead><tr><th>Buyer</th><th>Product</th><th>Machine</th><th>Days</th><th>Expires</th><th>Status</th><th></th></tr></thead><tbody>${
       rows.map((r) => `<tr>
-        <td>${esc(r.customer_name)}</td><td>${String(r.lic_key || '').startsWith('FA1.') ? 'Flow Auto' : 'QuickVid'}</td><td style="font-family:monospace">${esc(r.machine)}</td>
+        <td>${esc(r.customer_name)}</td><td>${String(r.lic_key || '').startsWith('FA1.') ? 'Flow Auto' : (String(r.lic_key || '').startsWith('ER1.') ? 'ElevenRec' : 'QuickVid')}</td><td style="font-family:monospace">${esc(r.machine)}</td>
         <td>${r.days}</td><td>${esc(r.exp)}</td>
         <td>${r.days_left >= 0 ? `<span class="pill">${r.days_left} days left</span>` : '<span class="pill gold">Expired</span>'}</td>
         <td style="white-space:nowrap"><button class="btn small" type="button" data-lic-copy="${r.id}">Copy key</button> <button class="btn small" type="button" data-lic-del="${r.id}">Delete</button></td>
