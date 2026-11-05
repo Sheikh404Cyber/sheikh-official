@@ -836,3 +836,9 @@ body:hover #cursorRing { opacity: .6; }
 /* ===== v20 — band pulled fully inside the unit (its glyph tips were sinking
    past the floor, outside the unit's own melt — the dashed red segments). ===== */
 .ed-giant { bottom: .18em; }
+
+/* ===== v21 — the band is a BAND: letters ~half the portrait's height,
+   seated on the shoulder/chest line, sized only from the portrait (cqw)
+   so the proportion can never drift on any screen. ===== */
+.ed-giant { font-size: 32cqw; bottom: .66em; }
+@media (min-width: 901px) { .ed-giant { font-size: 32cqw; } }
