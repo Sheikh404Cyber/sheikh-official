@@ -868,3 +868,26 @@ body:hover #cursorRing { opacity: .6; }
 
 /* ===== v24 — band seated lower (his order): closer to the figures' base. ===== */
 .ed-giant { bottom: .30em; }
+
+/* ===== v25 — floor lines pulled into one tight stack at the very bottom:
+   1st line at the floor, 2nd and 3rd hugging it just above, ~6px apart. ===== */
+.ed-tri::before { height: 96px;
+  background:
+    linear-gradient(to right, transparent, rgba(230,6,0,.16) 32%, rgba(255,110,80,.28) 50%, rgba(230,6,0,.16) 68%, transparent) center calc(100% - 22px) / 86% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.30) 30%, rgba(255,110,80,.52) 50%, rgba(230,6,0,.30) 70%, transparent) center calc(100% - 14px) / 93% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.5) 28%, rgba(255,110,80,.95) 50%, rgba(230,6,0,.5) 72%, transparent) center calc(100% - 6px) / 100% 2px no-repeat,
+    radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+}
+
+/* ===== v26 — tight stack lifted into the visible zone + stronger alphas
+   (v25 sat inside the scrim's opaque core and read too dim). ===== */
+.ed-tri::before {
+  background:
+    linear-gradient(to right, transparent, rgba(230,6,0,.28) 32%, rgba(255,110,80,.45) 50%, rgba(230,6,0,.28) 68%, transparent) center calc(100% - 50px) / 86% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.45) 30%, rgba(255,110,80,.7) 50%, rgba(230,6,0,.45) 70%, transparent) center calc(100% - 42px) / 93% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.65) 28%, rgba(255,120,85,1) 50%, rgba(230,6,0,.65) 72%, transparent) center calc(100% - 34px) / 100% 2px no-repeat,
+    radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+}
+.ed-hero::after { height: 200px; }
