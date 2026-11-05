@@ -842,3 +842,13 @@ body:hover #cursorRing { opacity: .6; }
    so the proportion can never drift on any screen. ===== */
 .ed-giant { font-size: 32cqw; bottom: .66em; }
 @media (min-width: 901px) { .ed-giant { font-size: 32cqw; } }
+
+/* ===== v22 — professional stage floor under the locked unit (3 layers in
+   one piece, riding with the unit): contact shadow + accent light line +
+   red light pool, painted over the melt so the figures land on a floor. ===== */
+.ed-tri::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: -12px; width: 112%; height: 92px; z-index: 4; pointer-events: none;
+  background:
+    linear-gradient(to right, transparent, rgba(230,6,0,.5) 28%, rgba(255,110,80,.95) 50%, rgba(230,6,0,.5) 72%, transparent) center 62% / 100% 2px no-repeat,
+    radial-gradient(ellipse 46% 62% at 50% 64%, rgba(0,0,0,.6), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 50% 66%, rgba(230,6,0,.16), transparent 70%);
+}
