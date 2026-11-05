@@ -852,3 +852,16 @@ body:hover #cursorRing { opacity: .6; }
     radial-gradient(ellipse 46% 62% at 50% 64%, rgba(0,0,0,.6), transparent 70%),
     radial-gradient(ellipse 60% 90% at 50% 66%, rgba(230,6,0,.16), transparent 70%);
 }
+
+/* ===== v23 — floor lines x3, stepping down and blending into each other;
+   and the unit melt now fades at its left/right edges too, so no seam
+   shows at the photo's bottom corners. ===== */
+.ed-tri::after { left: -12%; right: -12%; -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); }
+.ed-tri::before { height: 110px;
+  background:
+    linear-gradient(to right, transparent, rgba(230,6,0,.45) 28%, rgba(255,110,80,.9) 50%, rgba(230,6,0,.45) 72%, transparent) center 52% / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.30) 30%, rgba(255,110,80,.5) 50%, rgba(230,6,0,.30) 70%, transparent) center 66% / 92% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(230,6,0,.16) 32%, rgba(255,110,80,.26) 50%, rgba(230,6,0,.16) 68%, transparent) center 80% / 84% 2px no-repeat,
+    radial-gradient(ellipse 46% 62% at 50% 60%, rgba(0,0,0,.6), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 50% 62%, rgba(230,6,0,.15), transparent 70%);
+}
