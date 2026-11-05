@@ -826,3 +826,13 @@ body:hover #cursorRing { opacity: .6; }
 .ed-giant { animation: none; opacity: 1; top: auto; bottom: -.12em; font-size: 52cqw; }
 .ed-giant .gl2 { animation: none; opacity: 1; transform: none; }
 @media (min-width: 901px) { .ed-giant { font-size: min(52cqw, 23vw); } }
+
+/* ===== v19 — the melt lives INSIDE the locked unit: one gradient painted
+   over photo + letters together, reaching full background exactly at the
+   unit's floor. Neither can fade before the other; no gap, no blocks. ===== */
+.ed-tri img { -webkit-mask-image: none; mask-image: none; }
+.ed-tri::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto; height: 46%; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 55%, transparent) 55%, var(--bg) 98%); filter: none; z-index: 3; pointer-events: none; }
+
+/* ===== v20 — band pulled fully inside the unit (its glyph tips were sinking
+   past the floor, outside the unit's own melt — the dashed red segments). ===== */
+.ed-giant { bottom: .18em; }
