@@ -116,12 +116,18 @@
     <!-- License keys (QuickVid) -->
     <section class="tab-page" id="tab-license">
       <h1>License Keys</h1>
-      <p class="page-sub">QuickVid license keys for buyers. The buyer sends you their <b>Machine Code</b> from QuickVid's activation screen (WhatsApp) — enter it here with the number of days, generate the key, and send the key back. A key works only on that one PC and stops on its own when the days end.</p>
+      <p class="page-sub">License keys for buyers — works for <b>QuickVid</b> and <b>Flow Auto</b>. The buyer sends you their code from the product's activation screen (QuickVid: <b>Machine Code</b> · Flow Auto: <b>Install ID</b>) — pick the product, enter the code with the number of days, generate the key, and send the key back. A key works only on that one PC/browser and stops on its own when the days end.</p>
       <div class="panel-box" style="max-width:560px">
         <h2>🔑 Generate a key</h2>
         <form id="licForm">
+          <div class="field"><label for="licProduct">Product *</label>
+            <select id="licProduct">
+              <option value="quickvid" selected>SHEIKH QuickVid (QV1 key)</option>
+              <option value="flow">SHEIKH Flow Auto (FA1 key)</option>
+            </select>
+          </div>
           <div class="field"><label for="licName">Buyer name *</label><input id="licName" required placeholder="Karim Rahman"></div>
-          <div class="field"><label for="licMachine">Machine Code * (from the buyer's QuickVid)</label><input id="licMachine" required placeholder="XXXX-XXXX-XXXX-XXXX" style="text-transform:uppercase"></div>
+          <div class="field"><label for="licMachine">Machine Code / Install ID * (from the buyer's activation screen)</label><input id="licMachine" required placeholder="XXXX-XXXX-XXXX-XXXX" style="text-transform:uppercase"></div>
           <div class="field"><label for="licDays">Days *</label>
             <select id="licDays">
               <option value="trial3">3 days — FREE TRIAL</option>
@@ -297,6 +303,6 @@
 </div>
 
 <div class="toast-zone" id="toastZone"></div>
-<script src="/assets/js/admin.js?v=6"></script>
+<script src="/assets/js/admin.js?v=7"></script>
 </body>
 </html>

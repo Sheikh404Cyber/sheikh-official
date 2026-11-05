@@ -61,27 +61,28 @@ export async function onRequestPost({ request, env }) {
     const machine = cleanStr(body?.machine, 40).toUpperCase();
     const days = clampInt(body?.days, 1, 3650, 0);
     const userId = body?.user_id ? clampInt(body.user_id, 1, 1e9, 0) : null;
+    const product = body?.product === 'flow' ? 'flow' : 'quickvid';
     if (!name) return fail(400, 'Customer name is required');
     if (!/^[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/.test(machine)) {
-      return fail(400, 'Machine Code must look like XXXX-XXXX-XXXX-XXXX (from the customer\'s QuickVid activation screen)');
+      return fail(400, 'Code must look like XXXX-XXXX-XXXX-XXXX (Machine Code from QuickVid, or Install ID from Flow Auto)');
     }
     if (!days) return fail(400, 'Days must be between 1 and 3650');
     if (!env.LICENSE_PRIVATE_KEY) return fail(500, 'License signing key is not configured on the server');
 
     const iat = dhakaToday();
     const exp = addDays(iat, days - 1); // aj shoho mot `days` din
-    const payload = { v: 1, name, machine, days, exp, iat, ...(body?.trial ? { trial: true } : {}) };
+    const payload = { v: 1, ...(product === 'flow' ? { product: 'flow' } : {}), name, machine, days, exp, iat, ...(body?.trial ? { trial: true } : {}) };
     const bodyB64 = b64url(new TextEncoder().encode(JSON.stringify(payload)));
     const key = await crypto.subtle.importKey('pkcs8', b64ToBytes(env.LICENSE_PRIVATE_KEY),
       { name: 'Ed25519' }, false, ['sign']);
     const sig = await crypto.subtle.sign({ name: 'Ed25519' }, key, new TextEncoder().encode(bodyB64));
-    const licKey = `QV1.${bodyB64}.${b64url(sig)}`;
+    const licKey = `${product === 'flow' ? 'FA1' : 'QV1'}.${bodyB64}.${b64url(sig)}`;
 
     const ins = await env.DB.prepare(
       'INSERT INTO licenses (user_id, customer_name, machine, days, exp, lic_key) VALUES (?, ?, ?, ?, ?, ?)'
     ).bind(userId, name, machine, days, exp, licKey).run();
 
-    return json({ ok: true, id: ins.meta && ins.meta.last_row_id, key: licKey, exp, days_left: daysLeft(exp) });
+    return json({ ok: true, id: ins.meta && ins.meta.last_row_id, key: licKey, exp, days_left: daysLeft(exp), product });
   } catch {
     return fail(500, 'Server error');
   }
