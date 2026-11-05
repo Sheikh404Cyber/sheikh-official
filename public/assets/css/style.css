@@ -909,3 +909,11 @@ body:hover #cursorRing { opacity: .6; }
 [data-theme="light"] .ed-copy .subtitle,
 [data-theme="light"] .ed-copy .lead,
 [data-theme="light"] .ed-copy .location { text-shadow: none; }
+
+/* ===== v29 — day mode softened (his order: too white/glowy): warm grey
+   surfaces instead of stark white, hero glow calmed. ===== */
+[data-theme="light"] {
+  --bg: #eae8e2; --bg2: #dfdcd3; --surface: #f4f1ea; --surface2: #e5e1d8;
+}
+[data-theme="light"] .site-header { background: rgba(238, 235, 228, .88); }
+[data-theme="light"] .hero::before { opacity: .45; }
