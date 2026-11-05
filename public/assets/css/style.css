@@ -31,11 +31,11 @@
   --bg2: #08131a;
   --surface: #0b151d;
   --surface2: #0e1a24;
-  --border: rgba(230, 6, 0, 0.16);
+  --border: rgba(45, 212, 191, 0.16);
   --border-soft: rgba(255, 255, 255, 0.08);
-  --acc: #e10600;
-  --acc-deep: #8f0400;
-  --acc-soft: rgba(230, 6, 0, 0.12);
+  --acc: #2dd4bf;
+  --acc-deep: #1a7b6f;
+  --acc-soft: rgba(45, 212, 191, 0.12);
   --text: #e9f4f3;
   --muted: #93a8ad;
   --danger: #ff8585;
@@ -75,7 +75,7 @@ img { max-width: 100%; }
   width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
   background: linear-gradient(135deg, var(--acc), var(--acc-deep));
   color: #03211d; font-size: 21px; font-weight: 900; letter-spacing: 0;
-  box-shadow: 0 0 22px rgba(230, 6, 0, 0.35);
+  box-shadow: 0 0 22px rgba(45, 212, 191, 0.35);
 }
 .logo small { color: var(--acc); }
 .main-nav { display: flex; gap: 4px; margin-left: auto; }
@@ -97,9 +97,9 @@ img { max-width: 100%; }
 .btn:hover { transform: translateY(-2px); border-color: var(--border); }
 .btn.primary {
   background: linear-gradient(135deg, var(--acc), var(--acc-deep)); border: none; color: #03211d;
-  box-shadow: 0 8px 26px rgba(230, 6, 0, 0.28);
+  box-shadow: 0 8px 26px rgba(45, 212, 191, 0.28);
 }
-.btn.primary:hover { box-shadow: 0 12px 32px rgba(230, 6, 0, 0.42); }
+.btn.primary:hover { box-shadow: 0 12px 32px rgba(45, 212, 191, 0.42); }
 .btn.ghost { background: transparent; }
 .btn.small { padding: 7px 13px; font-size: 13px; }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
@@ -109,14 +109,14 @@ img { max-width: 100%; }
   position: relative; overflow: hidden;
   padding: 92px 0 84px;
   background:
-    radial-gradient(900px 480px at 85% -10%, rgba(230, 6, 0, 0.16), transparent 60%),
-    radial-gradient(700px 420px at 8% 110%, rgba(230, 6, 0, 0.08), transparent 60%),
+    radial-gradient(900px 480px at 85% -10%, rgba(45, 212, 191, 0.16), transparent 60%),
+    radial-gradient(700px 420px at 8% 110%, rgba(45, 212, 191, 0.08), transparent 60%),
     linear-gradient(180deg, var(--bg2), var(--bg));
 }
 .hero::before { /* animated glow blob */
   content: ''; position: absolute; width: 560px; height: 560px; border-radius: 50%;
   right: -140px; top: -160px; pointer-events: none;
-  background: radial-gradient(circle, rgba(230, 6, 0, 0.28), transparent 65%);
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.28), transparent 65%);
   filter: blur(10px); animation: glowDrift 11s ease-in-out infinite alternate;
 }
 @keyframes glowDrift {
@@ -145,8 +145,8 @@ img { max-width: 100%; }
 .hero-photos { display: flex; justify-content: center; align-items: flex-end; gap: 16px; margin-bottom: 34px; }
 .hero-photos .hp {
   border-radius: 18px; padding: 6px; flex: none;
-  background: linear-gradient(160deg, rgba(230, 6, 0, 0.35), rgba(255, 255, 255, 0.04) 45%, rgba(13, 148, 136, 0.3));
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), 0 0 42px rgba(230, 6, 0, 0.12);
+  background: linear-gradient(160deg, rgba(45, 212, 191, 0.35), rgba(255, 255, 255, 0.04) 45%, rgba(13, 148, 136, 0.3));
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), 0 0 42px rgba(45, 212, 191, 0.12);
   animation: floaty 6s ease-in-out infinite;
 }
 .hero-photos .hp:nth-child(1) { animation-delay: 0.7s; }
@@ -161,14 +161,14 @@ img { max-width: 100%; }
   padding: 7px 14px; border-radius: 999px; margin-bottom: 22px;
 }
 .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); animation: pulseDot 1.8s ease-in-out infinite; }
-@keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(230, 6, 0, 0.5); } 50% { box-shadow: 0 0 0 7px rgba(230, 6, 0, 0); } }
+@keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.5); } 50% { box-shadow: 0 0 0 7px rgba(45, 212, 191, 0); } }
 .hero h1 { font-size: clamp(44px, 7.2vw, 76px); font-weight: 900; line-height: 1.04; letter-spacing: 0.01em; }
 .hero h1 .hl { display: inline-block; opacity: 0; transform: translateY(26px) rotate(2deg); animation: letterIn 0.7s cubic-bezier(0.2, 0.8, 0.25, 1) forwards; animation-delay: var(--d, 0s); }
 .hero h1 .hl.acc { color: var(--acc); }
 @keyframes letterIn { to { opacity: 1; transform: translateY(0) rotate(0); } }
 .hero .subtitle { font-size: clamp(18px, 2.6vw, 24px); font-weight: 600; color: var(--acc); margin-top: 14px; }
 .hero .location { color: var(--muted); margin-top: 12px; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 7px; }
-.hero .location svg { width: 15px; height: 15px; stroke: #8f0400; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.hero .location svg { width: 15px; height: 15px; stroke: #1a7b6f; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 .hero .lead { color: var(--muted); margin-top: 16px; max-width: 520px; font-size: 16px; }
 .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
 .hero-ctas .btn { padding: 13px 24px; font-size: 15px; }
@@ -178,7 +178,7 @@ img { max-width: 100%; }
   border: 1px solid var(--border-soft); background: rgba(255, 255, 255, 0.03); color: var(--muted);
   transition: transform 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.social-row a:hover { color: var(--acc); border-color: var(--border); transform: translateY(-3px); box-shadow: 0 10px 22px rgba(230, 6, 0, 0.16); }
+.social-row a:hover { color: var(--acc); border-color: var(--border); transform: translateY(-3px); box-shadow: 0 10px 22px rgba(45, 212, 191, 0.16); }
 .social-row svg { width: 19px; height: 19px; fill: currentColor; }
 @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .scroll-cue {
@@ -223,7 +223,7 @@ img { max-width: 100%; }
   padding: 26px; display: flex; flex-direction: column; gap: 10px;
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.25, 1), box-shadow 0.3s, border-color 0.3s;
 }
-.card:hover { transform: translateY(-7px); border-color: var(--border); box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45), 0 0 34px rgba(230, 6, 0, 0.1); }
+.card:hover { transform: translateY(-7px); border-color: var(--border); box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45), 0 0 34px rgba(45, 212, 191, 0.1); }
 .card .icon {
   width: 48px; height: 48px; border-radius: 13px; display: grid; place-items: center;
   background: var(--acc-soft); border: 1px solid var(--border); font-size: 23px;
@@ -268,7 +268,7 @@ img { max-width: 100%; }
 }
 .video-thumb .play span {
   width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center;
-  background: rgba(230, 6, 0, 0.92); color: #03211d; font-size: 24px; padding-left: 4px;
+  background: rgba(45, 212, 191, 0.92); color: #03211d; font-size: 24px; padding-left: 4px;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5); transition: transform 0.25s;
 }
 .video-card:hover .play span { transform: scale(1.1); }
@@ -278,9 +278,9 @@ img { max-width: 100%; }
 /* demos */
 .demo-card .shot {
   border-radius: 12px; border: 1px solid var(--border-soft); overflow: hidden;
-  background: linear-gradient(135deg, rgba(230, 6, 0, 0.14), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.14), rgba(255, 255, 255, 0.02));
   aspect-ratio: 16 / 8.2; display: grid; place-items: center;
-  font-size: 30px; font-weight: 900; letter-spacing: 0.1em; color: rgba(230, 6, 0, 0.55);
+  font-size: 30px; font-weight: 900; letter-spacing: 0.1em; color: rgba(45, 212, 191, 0.55);
 }
 .demo-card .shot img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -297,7 +297,7 @@ img { max-width: 100%; }
   font-weight: 700; font-size: 15px;
   transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
-.contact-btn:hover { transform: translateY(-4px); border-color: var(--border); box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(230, 6, 0, 0.08); }
+.contact-btn:hover { transform: translateY(-4px); border-color: var(--border); box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(45, 212, 191, 0.08); }
 .contact-btn .ci { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: #ffffff; border: 1px solid rgba(9, 45, 45, 0.08); flex: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); }
 .contact-btn svg { width: 22px; height: 22px; }
 .contact-btn small { display: block; color: var(--muted); font-weight: 500; font-size: 12.5px; }
@@ -313,7 +313,7 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 .auth-shell { min-height: calc(100vh - var(--header-h)); display: grid; place-items: center; padding: 48px 0 70px; position: relative; overflow: hidden; }
 .auth-shell::before {
   content: ''; position: absolute; width: 520px; height: 520px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 6, 0, 0.16), transparent 65%);
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.16), transparent 65%);
   top: -160px; right: -120px; pointer-events: none; animation: glowDrift 11s ease-in-out infinite alternate;
 }
 .auth-card {
@@ -331,7 +331,7 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: var(--acc); box-shadow: 0 0 0 3px rgba(230, 6, 0, 0.18);
+  outline: none; border-color: var(--acc); box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.18);
 }
 .auth-card .btn { width: 100%; padding: 13px; font-size: 15px; }
 .form-error {
@@ -377,7 +377,7 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 .step .n {
   width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
   background: linear-gradient(135deg, var(--acc), var(--acc-deep)); color: #03211d;
-  font-size: 19px; font-weight: 900; margin-bottom: 14px; box-shadow: 0 8px 22px rgba(230, 6, 0, 0.3);
+  font-size: 19px; font-weight: 900; margin-bottom: 14px; box-shadow: 0 8px 22px rgba(45, 212, 191, 0.3);
 }
 .step h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
 .step p { color: var(--muted); font-size: 14.5px; }
@@ -463,7 +463,7 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   .hero h1 .hl { opacity: 1; transform: none; }
 }
 
-.logo-img { height: 38px; width: auto; display: block; filter: drop-shadow(0 0 10px rgba(230, 6, 0, 0.35)); }
+.logo-img { height: 38px; width: auto; display: block; filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.35)); }
 
 /* ---------- tool logo in card icon ---------- */
 .card .icon.has-logo { padding: 6px; }
@@ -473,7 +473,7 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
 /* Wildcut-style sliding theme switch: line sun (dark) / moon (light), brand turquoise */
 .theme-switch {
   position: relative; width: 50px; height: 27px; border-radius: 999px; flex: none; padding: 0; cursor: pointer;
-  border: 1px solid rgba(13, 148, 136, 0.55); background: rgba(230, 6, 0, 0.16); transition: border-color 0.2s, background 0.25s;
+  border: 1px solid rgba(13, 148, 136, 0.55); background: rgba(45, 212, 191, 0.16); transition: border-color 0.2s, background 0.25s;
 }
 .theme-switch:hover { border-color: var(--acc); }
 .theme-switch .knob {
@@ -481,8 +481,8 @@ footer .logo { justify-content: center; margin-bottom: 10px; }
   background: #ffffff; display: grid; place-items: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.25, 1);
 }
-.theme-switch .knob svg { width: 15px; height: 15px; stroke: #8f0400; fill: none; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
-.theme-switch .knob svg .filled { fill: #8f0400; stroke: none; }
+.theme-switch .knob svg { width: 15px; height: 15px; stroke: #1a7b6f; fill: none; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
+.theme-switch .knob svg .filled { fill: #1a7b6f; stroke: none; }
 [data-theme="light"] .theme-switch .knob { transform: translateX(23px); }
 .logo span { white-space: nowrap; }
 .header-actions .btn { white-space: nowrap; }
@@ -848,9 +848,9 @@ body:hover #cursorRing { opacity: .6; }
    red light pool, painted over the melt so the figures land on a floor. ===== */
 .ed-tri::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: -12px; width: 112%; height: 92px; z-index: 4; pointer-events: none;
   background:
-    linear-gradient(to right, transparent, rgba(230,6,0,.5) 28%, rgba(255,110,80,.95) 50%, rgba(230,6,0,.5) 72%, transparent) center 62% / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.5) 28%, rgba(140,231,220,.95) 50%, rgba(45,212,191,.5) 72%, transparent) center 62% / 100% 2px no-repeat,
     radial-gradient(ellipse 46% 62% at 50% 64%, rgba(0,0,0,.6), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 50% 66%, rgba(230,6,0,.16), transparent 70%);
+    radial-gradient(ellipse 60% 90% at 50% 66%, rgba(45,212,191,.16), transparent 70%);
 }
 
 /* ===== v23 — floor lines x3, stepping down and blending into each other;
@@ -859,11 +859,11 @@ body:hover #cursorRing { opacity: .6; }
 .ed-tri::after { left: -12%; right: -12%; -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); }
 .ed-tri::before { height: 110px;
   background:
-    linear-gradient(to right, transparent, rgba(230,6,0,.45) 28%, rgba(255,110,80,.9) 50%, rgba(230,6,0,.45) 72%, transparent) center 52% / 100% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.30) 30%, rgba(255,110,80,.5) 50%, rgba(230,6,0,.30) 70%, transparent) center 66% / 92% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.16) 32%, rgba(255,110,80,.26) 50%, rgba(230,6,0,.16) 68%, transparent) center 80% / 84% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.45) 28%, rgba(140,231,220,.9) 50%, rgba(45,212,191,.45) 72%, transparent) center 52% / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.30) 30%, rgba(140,231,220,.5) 50%, rgba(45,212,191,.30) 70%, transparent) center 66% / 92% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.16) 32%, rgba(140,231,220,.26) 50%, rgba(45,212,191,.16) 68%, transparent) center 80% / 84% 2px no-repeat,
     radial-gradient(ellipse 46% 62% at 50% 60%, rgba(0,0,0,.6), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 50% 62%, rgba(230,6,0,.15), transparent 70%);
+    radial-gradient(ellipse 60% 90% at 50% 62%, rgba(45,212,191,.15), transparent 70%);
 }
 
 /* ===== v24 — band seated lower (his order): closer to the figures' base. ===== */
@@ -873,22 +873,22 @@ body:hover #cursorRing { opacity: .6; }
    1st line at the floor, 2nd and 3rd hugging it just above, ~6px apart. ===== */
 .ed-tri::before { height: 96px;
   background:
-    linear-gradient(to right, transparent, rgba(230,6,0,.16) 32%, rgba(255,110,80,.28) 50%, rgba(230,6,0,.16) 68%, transparent) center calc(100% - 22px) / 86% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.30) 30%, rgba(255,110,80,.52) 50%, rgba(230,6,0,.30) 70%, transparent) center calc(100% - 14px) / 93% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.5) 28%, rgba(255,110,80,.95) 50%, rgba(230,6,0,.5) 72%, transparent) center calc(100% - 6px) / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.16) 32%, rgba(140,231,220,.28) 50%, rgba(45,212,191,.16) 68%, transparent) center calc(100% - 22px) / 86% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.30) 30%, rgba(140,231,220,.52) 50%, rgba(45,212,191,.30) 70%, transparent) center calc(100% - 14px) / 93% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.5) 28%, rgba(140,231,220,.95) 50%, rgba(45,212,191,.5) 72%, transparent) center calc(100% - 6px) / 100% 2px no-repeat,
     radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(45,212,191,.15), transparent 70%);
 }
 
 /* ===== v26 — tight stack lifted into the visible zone + stronger alphas
    (v25 sat inside the scrim's opaque core and read too dim). ===== */
 .ed-tri::before {
   background:
-    linear-gradient(to right, transparent, rgba(230,6,0,.28) 32%, rgba(255,110,80,.45) 50%, rgba(230,6,0,.28) 68%, transparent) center calc(100% - 50px) / 86% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.45) 30%, rgba(255,110,80,.7) 50%, rgba(230,6,0,.45) 70%, transparent) center calc(100% - 42px) / 93% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.65) 28%, rgba(255,120,85,1) 50%, rgba(230,6,0,.65) 72%, transparent) center calc(100% - 34px) / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.28) 32%, rgba(140,231,220,.45) 50%, rgba(45,212,191,.28) 68%, transparent) center calc(100% - 50px) / 86% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.45) 30%, rgba(140,231,220,.7) 50%, rgba(45,212,191,.45) 70%, transparent) center calc(100% - 42px) / 93% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.65) 28%, rgba(255,120,85,1) 50%, rgba(45,212,191,.65) 72%, transparent) center calc(100% - 34px) / 100% 2px no-repeat,
     radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(45,212,191,.15), transparent 70%);
 }
 .ed-hero::after { height: 200px; }
 
@@ -897,11 +897,11 @@ body:hover #cursorRing { opacity: .6; }
    two a hair (3px) above each other. ===== */
 .ed-tri::before {
   background:
-    linear-gradient(to right, transparent, rgba(230,6,0,.45) 32%, rgba(255,110,80,.65) 50%, rgba(230,6,0,.45) 68%, transparent) center calc(100% - 18px) / 90% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.6) 30%, rgba(255,110,80,.85) 50%, rgba(230,6,0,.6) 70%, transparent) center calc(100% - 15px) / 95% 2px no-repeat,
-    linear-gradient(to right, transparent, rgba(230,6,0,.8) 28%, rgba(255,120,85,1) 50%, rgba(230,6,0,.8) 72%, transparent) center calc(100% - 12px) / 100% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.45) 32%, rgba(140,231,220,.65) 50%, rgba(45,212,191,.45) 68%, transparent) center calc(100% - 18px) / 90% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.6) 30%, rgba(140,231,220,.85) 50%, rgba(45,212,191,.6) 70%, transparent) center calc(100% - 15px) / 95% 2px no-repeat,
+    linear-gradient(to right, transparent, rgba(45,212,191,.8) 28%, rgba(255,120,85,1) 50%, rgba(45,212,191,.8) 72%, transparent) center calc(100% - 12px) / 100% 2px no-repeat,
     radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
+    radial-gradient(ellipse 60% 90% at 50% 60%, rgba(45,212,191,.15), transparent 70%);
 }
 
 /* ===== v28 — light theme: kill the dark-theme readability halos on the hero
@@ -1060,3 +1060,7 @@ body:hover #cursorRing { opacity: .6; }
   #toolsGrid .foot { margin-top: 6px; flex-wrap: nowrap; }
   #toolsGrid .foot .btn { padding: 7px 13px; font-size: 13px; white-space: normal; }
 }
+
+/* ===== v42 — TEAL is the accent now (his pick from the 10). Light mode
+   takes the deeper teal so text stays readable on the soft background. ===== */
+[data-theme="light"] { --acc: #0f766e; }
