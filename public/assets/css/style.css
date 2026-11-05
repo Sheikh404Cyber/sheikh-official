@@ -903,3 +903,9 @@ body:hover #cursorRing { opacity: .6; }
     radial-gradient(ellipse 46% 62% at 50% 58%, rgba(0,0,0,.6), transparent 70%),
     radial-gradient(ellipse 60% 90% at 50% 60%, rgba(230,6,0,.15), transparent 70%);
 }
+
+/* ===== v28 — light theme: kill the dark-theme readability halos on the hero
+   copy (they smear dark text on a light background). ===== */
+[data-theme="light"] .ed-copy .subtitle,
+[data-theme="light"] .ed-copy .lead,
+[data-theme="light"] .ed-copy .location { text-shadow: none; }
